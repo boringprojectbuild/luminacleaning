@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumina Cleaning Service | San Antonio, TX</title>
+  <meta name="description" content="Professional cleaning service in San Antonio, TX. Move in/out, apartment, office, and new home cleaning. Serving 78208 and surrounding areas. Call (254) 447-8622." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://luminacleaning.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lumina Cleaning Service | San Antonio, TX" />
+  <meta property="og:description" content="Professional cleaning service in San Antonio, TX. Move in/out, apartment, office, and new home cleaning. Serving 78208 and surrounding areas." />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:    #F6F4F1;
+      --stone:   #E6E4E1;
+      --charcoal:#2B2B2B;
+      --accent:  #CFC8BE;
+      --muted:   #7A7470;
+      --serif:   'Playfair Display', Georgia, serif;
+      --sans:    'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--sand);
+      color: var(--charcoal);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ── Typography helpers ───────────────────────────────── */
+    .serif { font-family: var(--serif); }
+
+    h2 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      line-height: 1.25;
+      color: var(--charcoal);
+    }
+
+    /* ── Layout helpers ───────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin-inline: auto;
+      padding-inline: 1.5rem;
+    }
+
+    section { padding-block: clamp(4rem, 8vw, 7rem); }
+
+    /* ── Buttons ──────────────────────────────────────────── */
+    .btn {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 2rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--charcoal);
+      color: #fff;
+      border: 1px solid var(--charcoal);
+    }
+    .btn-primary:hover { background: #3e3e3e; border-color: #3e3e3e; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--charcoal);
+      border: 1px solid var(--charcoal);
+    }
+    .btn-outline:hover { background: var(--charcoal); color: #fff; }
+
+    .btn-outline-light {
+      background: transparent;
+      color: var(--charcoal);
+      border: 1px solid var(--accent);
+    }
+    .btn-outline-light:hover { background: var(--charcoal); color: #fff; border-color: var(--charcoal); }
+
+    /* ════════════════════════════════════════════════════════
+       1. NAV
+    ════════════════════════════════════════════════════════ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--sand);
+      border-bottom: 1px solid var(--accent);
+      transition: box-shadow 0.2s ease;
+    }
+    .nav.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,0.05); }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      height: 68px;
+    }
+
+    .nav__logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--charcoal);
+      flex-shrink: 0;
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 2.25rem;
+    }
+
+    .nav__links a {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+    .nav__links a:hover { color: var(--charcoal); }
+
+    .nav__cta { margin-left: 1rem; }
+
+    /* Mobile nav toggle */
+    .nav__toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav__toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--charcoal);
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .nav__toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav__toggle.open span:nth-child(2) { opacity: 0; }
+    .nav__toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav__mobile {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--accent);
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-size: 0.9375rem;
+      color: var(--charcoal);
+      padding: 0.9rem 1.5rem;
+      border-bottom: 1px solid var(--stone);
+    }
+    .nav__mobile .btn { margin: 1rem 1.5rem 1.25rem; align-self: flex-start; }
+
+    @media (max-width: 680px) {
+      .nav__links, .nav__cta { display: none; }
+      .nav__toggle { display: flex; }
+    }
+
+    /* ════════════════════════════════════════════════════════
+       2. HERO
+    ════════════════════════════════════════════════════════ */
+    .hero {
+      background: var(--sand);
+      padding-block: clamp(5rem, 12vw, 9rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle grain texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(207,200,190,0.22) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .hero__inner {
+      position: relative;
+      max-width: 680px;
+    }
+
+    .hero__eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 500;
+      line-height: 1.15;
+      color: var(--charcoal);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero__sub {
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       3. TRUST BAR
+    ════════════════════════════════════════════════════════ */
+    .trust {
+      background: var(--stone);
+      padding-block: 0;
+    }
+
+    .trust__inner {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .trust__item {
+      flex: 1;
+      text-align: center;
+      padding: 2.25rem 1.5rem;
+      position: relative;
+    }
+
+    .trust__item + .trust__item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background: var(--accent);
+    }
+
+    .trust__label {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      display: block;
+    }
+
+    .trust__sub {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      display: block;
+    }
+
+    @media (max-width: 560px) {
+      .trust__inner { flex-direction: column; }
+      .trust__item + .trust__item::before {
+        top: 0; left: 20%; width: 60%; height: 1px;
+      }
+    }
+
+    /* ════════════════════════════════════════════════════════
+       4. SERVICES
+    ════════════════════════════════════════════════════════ */
+    .services { background: var(--sand); }
+
+    .services__header {
+      margin-bottom: 3rem;
+    }
+
+    .services__eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 600px) {
+      .services__grid { grid-template-columns: 1fr; }
+    }
+
+    .service-card {
+      background: var(--stone);
+      border: 1px solid var(--accent);
+      padding: 2.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: border-color 0.2s ease;
+    }
+    .service-card:hover { border-color: #b8b0a4; }
+
+    .service-card__icon {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .service-card__name {
+      font-family: var(--serif);
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+
+    .service-card__desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .service-card__link {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--charcoal);
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 1px;
+      align-self: flex-start;
+      transition: border-color 0.15s;
+    }
+    .service-card__link:hover { border-color: var(--charcoal); }
+
+    /* ════════════════════════════════════════════════════════
+       5. WHY LUMINA
+    ════════════════════════════════════════════════════════ */
+    .why { background: var(--stone); }
+
+    .why__header { margin-bottom: 3.5rem; }
+
+    .why__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    @media (max-width: 700px) {
+      .why__grid { grid-template-columns: 1fr; gap: 2.25rem; }
+    }
+
+    .why__item {}
+
+    .why__num {
+      font-family: var(--serif);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .why__title {
+      font-family: var(--serif);
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 0.6rem;
+    }
+
+    .why__desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       6. ABOUT STRIP
+    ════════════════════════════════════════════════════════ */
+    .about { background: var(--sand); }
+
+    .about__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 700px) {
+      .about__inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .about__eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .about__text {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-top: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .about__visual {
+      position: relative;
+    }
+
+    .about__block {
+      background: var(--stone);
+      border: 1px solid var(--accent);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about__monogram {
+      font-family: var(--serif);
+      font-size: 5rem;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      user-select: none;
+    }
+
+    .about__accent-line {
+      position: absolute;
+      bottom: -1.25rem;
+      right: -1.25rem;
+      width: 60%;
+      height: 60%;
+      border: 1px solid var(--accent);
+      pointer-events: none;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       7. CONTACT CTA STRIP
+    ════════════════════════════════════════════════════════ */
+    .cta-strip {
+      background: var(--stone);
+      padding-block: clamp(4rem, 8vw, 6rem);
+      text-align: center;
+    }
+
+    .cta-strip__inner { max-width: 600px; margin-inline: auto; }
+
+    .cta-strip h2 { margin-bottom: 0.75rem; }
+
+    .cta-strip__sub {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .cta-strip__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cta-strip__phone {
+      font-size: 0.875rem;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    .cta-strip__phone a {
+      color: var(--charcoal);
+      font-weight: 500;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 1px;
+      transition: border-color 0.15s;
+    }
+    .cta-strip__phone a:hover { border-color: var(--charcoal); }
+
+    /* ════════════════════════════════════════════════════════
+       8. FOOTER
+    ════════════════════════════════════════════════════════ */
+    .footer {
+      background: var(--charcoal);
+      color: #c8c4be;
+      padding-block: clamp(2.5rem, 5vw, 4rem);
+    }
+
+    .footer__inner {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (max-width: 680px) {
+      .footer__inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .footer__logo {
+      font-family: var(--serif);
+      font-size: 1.375rem;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .footer__tagline {
+      font-size: 0.8125rem;
+      color: #8a8480;
+      line-height: 1.6;
+    }
+
+    .footer__col-title {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8a8480;
+      margin-bottom: 1rem;
+    }
+
+    .footer__links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .footer__links a {
+      font-size: 0.875rem;
+      color: #c8c4be;
+      transition: color 0.15s;
+    }
+    .footer__links a:hover { color: #fff; }
+
+    .footer__contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer__contact-item {
+      font-size: 0.8125rem;
+      color: #c8c4be;
+      line-height: 1.5;
+    }
+
+    .footer__contact-item a {
+      color: #c8c4be;
+      transition: color 0.15s;
+    }
+    .footer__contact-item a:hover { color: #fff; }
+
+    .footer__bottom {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer__copy {
+      font-size: 0.75rem;
+      color: #6a6460;
+    }
+
+    .footer__credit {
+      font-size: 0.75rem;
+      color: #6a6460;
+    }
+
+    .footer__credit a {
+      color: #8a8480;
+      border-bottom: 1px solid #6a6460;
+      padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .footer__credit a:hover { color: #c8c4be; border-color: #8a8480; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════════════ -->
+  <header class="nav" id="nav" role="banner">
+    <div class="container">
+      <nav class="nav__inner" aria-label="Primary navigation">
+        <a class="nav__logo" href="/">Lumina</a>
+
+        <ul class="nav__links" role="list">
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <a href="contact.html" class="btn btn-primary nav__cta">Get a Quote</a>
+
+        <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="nav__mobile" id="navMobile" role="navigation" aria-label="Mobile navigation">
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="btn btn-primary">Get a Quote</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ══════════════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════════════ -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="container">
+        <div class="hero__inner">
+          <p class="hero__eyebrow">San Antonio, TX</p>
+          <h1 id="hero-heading">A Clean Space.<br /><em>A Clear Mind.</em></h1>
+          <p class="hero__sub">San Antonio's trusted cleaning service — homes, apartments, and offices done right.</p>
+          <div class="hero__actions">
+            <a href="contact.html" class="btn btn-primary">Book a Cleaning</a>
+            <a href="services.html" class="btn btn-outline">See Our Services</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         TRUST BAR
+    ══════════════════════════════════════════════════ -->
+    <div class="trust" role="region" aria-label="At a glance">
+      <div class="container">
+        <ul class="trust__inner" role="list">
+          <li class="trust__item">
+            <span class="trust__label">8+ Years Experience</span>
+            <span class="trust__sub">Trusted &amp; Proven</span>
+          </li>
+          <li class="trust__item">
+            <span class="trust__label">San Antonio Local</span>
+            <span class="trust__sub">Born &amp; Based in SA</span>
+          </li>
+          <li class="trust__item">
+            <span class="trust__label">Residential &amp; Commercial</span>
+            <span class="trust__sub">Homes &amp; Offices</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         SERVICES OVERVIEW
+    ══════════════════════════════════════════════════ -->
+    <section class="services" aria-labelledby="services-heading">
+      <div class="container">
+        <div class="services__header">
+          <p class="services__eyebrow">What We Do</p>
+          <h2 id="services-heading">What We Clean</h2>
+        </div>
+
+        <ul class="services__grid" role="list">
+          <li class="service-card">
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="7" width="22" height="16" rx="1" stroke="#2B2B2B" stroke-width="1.25" fill="none"/>
+                <path d="M9 7V5a5 5 0 0 1 10 0v2" stroke="#2B2B2B" stroke-width="1.25" stroke-linecap="round" fill="none"/>
+                <path d="M10 14h8M14 11v6" stroke="#CFC8BE" stroke-width="1.25" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="service-card__name">Move In / Move Out Cleaning</p>
+            <p class="service-card__desc">A thorough clean that ensures every surface is spotless before or after your transition.</p>
+            <a href="services.html" class="service-card__link">Learn More</a>
+          </li>
+
+          <li class="service-card">
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="10" width="20" height="13" rx="1" stroke="#2B2B2B" stroke-width="1.25" fill="none"/>
+                <path d="M4 13h20" stroke="#CFC8BE" stroke-width="1.25"/>
+                <path d="M8 10V8a6 6 0 0 1 12 0v2" stroke="#2B2B2B" stroke-width="1.25" stroke-linecap="round" fill="none"/>
+                <circle cx="14" cy="17" r="1.5" fill="#2B2B2B"/>
+              </svg>
+            </div>
+            <p class="service-card__name">Apartment Turnover Cleaning</p>
+            <p class="service-card__desc">Fast, reliable turnovers that get units guest- or tenant-ready on time, every time.</p>
+            <a href="services.html" class="service-card__link">Learn More</a>
+          </li>
+
+          <li class="service-card">
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 23V10l9-5 9 5v13H5z" stroke="#2B2B2B" stroke-width="1.25" stroke-linejoin="round" fill="none"/>
+                <rect x="10" y="15" width="8" height="8" stroke="#CFC8BE" stroke-width="1.25" fill="none"/>
+                <path d="M14 15v8" stroke="#CFC8BE" stroke-width="1.25"/>
+              </svg>
+            </div>
+            <p class="service-card__name">Office Cleaning</p>
+            <p class="service-card__desc">Keep your workspace polished and professional — scheduled around your business hours.</p>
+            <a href="services.html" class="service-card__link">Learn More</a>
+          </li>
+
+          <li class="service-card">
+            <div class="service-card__icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 23h20" stroke="#2B2B2B" stroke-width="1.25" stroke-linecap="round"/>
+                <path d="M6 23V12l8-6 8 6v11" stroke="#2B2B2B" stroke-width="1.25" stroke-linejoin="round" fill="none"/>
+                <path d="M11 23v-6h6v6" stroke="#CFC8BE" stroke-width="1.25" fill="none"/>
+                <path d="M14 8v2" stroke="#CFC8BE" stroke-width="1.25" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="service-card__name">New Home Cleaning</p>
+            <p class="service-card__desc">Start fresh — we deep clean your new home so it's truly ready before you move in.</p>
+            <a href="services.html" class="service-card__link">Learn More</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         WHY LUMINA
+    ══════════════════════════════════════════════════ -->
+    <section class="why" aria-labelledby="why-heading">
+      <div class="container">
+        <div class="why__header">
+          <h2 id="why-heading">Why San Antonio<br />Trusts Lumina</h2>
+        </div>
+
+        <ul class="why__grid" role="list">
+          <li class="why__item">
+            <span class="why__num">01</span>
+            <p class="why__title">Detail-Obsessed</p>
+            <p class="why__desc">We don't rush. Every corner gets attention, every surface is treated with care.</p>
+          </li>
+          <li class="why__item">
+            <span class="why__num">02</span>
+            <p class="why__title">Local &amp; Trusted</p>
+            <p class="why__desc">Born from 8 years of hands-on experience right here in San Antonio.</p>
+          </li>
+          <li class="why__item">
+            <span class="why__num">03</span>
+            <p class="why__title">Flexible Booking</p>
+            <p class="why__desc">We work around your schedule, not ours — mornings, evenings, weekends.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         ABOUT STRIP
+    ══════════════════════════════════════════════════ -->
+    <section class="about" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="about__inner">
+          <div class="about__content">
+            <p class="about__eyebrow">Our Story</p>
+            <h2 id="about-heading">A Standard Built on Pride</h2>
+            <p class="about__text">
+              Lumina was founded by Aislinn Venegas, who brought 8 years of cleaning expertise from Chihuahua, Mexico to San Antonio. Every job reflects her standard: thorough, careful, and done with pride.
+            </p>
+            <a href="about.html" class="btn btn-outline">Meet Aislinn</a>
+          </div>
+
+          <div class="about__visual">
+            <div class="about__block" aria-hidden="true">
+              <span class="about__monogram">AV</span>
+            </div>
+            <div class="about__accent-line" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         CONTACT CTA STRIP
+    ══════════════════════════════════════════════════ -->
+    <section class="cta-strip" aria-labelledby="cta-heading">
+      <div class="cta-strip__inner">
+        <h2 id="cta-heading">Ready for a<br />Cleaner Space?</h2>
+        <p class="cta-strip__sub">Serving 78208 and surrounding San Antonio areas.</p>
+        <div class="cta-strip__actions">
+          <a href="contact.html" class="btn btn-primary">Get a Free Quote</a>
+          <p class="cta-strip__phone">Or call us at <a href="tel:+12544478622">(254) 447-8622</a></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="footer__logo">Lumina</span>
+          <p class="footer__tagline">Residential &amp; commercial cleaning<br />in San Antonio, Texas.</p>
+        </div>
+
+        <div class="footer__nav">
+          <p class="footer__col-title">Navigate</p>
+          <ul class="footer__links" role="list">
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__info">
+          <p class="footer__col-title">Contact</p>
+          <address class="footer__contact" style="font-style:normal;">
+            <span class="footer__contact-item">
+              <a href="tel:+12544478622">(254) 447-8622</a>
+            </span>
+            <span class="footer__contact-item">
+              <a href="mailto:luminaservices220@outlook.com">luminaservices220@outlook.com</a>
+            </span>
+            <span class="footer__contact-item">
+              923 E Carson St<br />San Antonio, TX
+            </span>
+          </address>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2026 Lumina Cleaning Service. All rights reserved.</p>
+        <p class="footer__credit">Website by <a href="https://boringproj.com" target="_blank" rel="noopener noreferrer">boring project.</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav shadow on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Mobile toggle
+    const toggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('navMobile');
+
+    toggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close mobile nav on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+
+</body>
+</html>
