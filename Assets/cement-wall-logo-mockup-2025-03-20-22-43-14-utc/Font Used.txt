@@ -1,0 +1,4 @@
+Font Used in this file:
+
+- Montserrat (https://fonts.google.com/specimen/Montserrat)
+- Inter (https://fonts.google.com/specimen/Inter)
