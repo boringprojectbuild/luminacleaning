@@ -39,7 +39,7 @@
     :root {
       --sand:      #D8C7B2;
       --dark:      #1C1410;
-      --terra:     #C4956A;
+      --terra:     #D8C7B2;
       --text-dark: #F0E8DC;
       --gold:      #D8C7B2;
       --serif:     'Cormorant Garamond', Georgia, serif;
@@ -295,6 +295,18 @@
       gap: 0;
     }
 
+    .tally-wrap {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .tally-wrap iframe {
+      width: 100%;
+      border: none;
+      background: transparent;
+    }
+
     .form__row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -344,7 +356,7 @@
 
     .form__input:focus,
     .form__select:focus,
-    .form__textarea:focus { border-bottom-color: #C4956A; }
+    .form__textarea:focus { border-bottom-color: #D8C7B2; }
 
     /* Select */
     .form__select-wrap {
@@ -395,7 +407,7 @@
       margin-top: 0.5rem;
     }
 
-    .form__submit:hover { background: #C4956A; color: #1C1410; }
+    .form__submit:hover { background: #D8C7B2; color: #1C1410; }
 
     .form__note {
       text-align: center;
@@ -613,67 +625,18 @@
         <h2 class="contact-form-section__h2" id="form-heading">Tell Us About Your Space.</h2>
         <p class="contact-form-section__sub">No commitment. No pressure. Just an honest quote.</p>
 
-        <form class="contact-form" novalidate aria-label="Contact and quote request form">
-
-          <!-- Row 1: Name -->
-          <div class="form__row">
-            <div class="form__field">
-              <label class="form__label" for="first-name">First Name</label>
-              <input class="form__input" id="first-name" name="first_name" type="text" placeholder="Aislinn" required />
-            </div>
-            <div class="form__field">
-              <label class="form__label" for="last-name">Last Name</label>
-              <input class="form__input" id="last-name" name="last_name" type="text" placeholder="Venegas" required />
-            </div>
-          </div>
-
-          <!-- Row 2: Phone -->
-          <div class="form__field">
-            <label class="form__label" for="phone">Phone Number</label>
-            <input class="form__input" id="phone" name="phone" type="tel" placeholder="(210) 000-0000" required />
-          </div>
-
-          <!-- Row 3: Email -->
-          <div class="form__field">
-            <label class="form__label" for="email">Email Address</label>
-            <input class="form__input" id="email" name="email" type="email" placeholder="you@example.com" required />
-          </div>
-
-          <!-- Row 4: Service -->
-          <div class="form__field">
-            <label class="form__label" for="service">Service Needed</label>
-            <div class="form__select-wrap">
-              <select class="form__select" id="service" name="service" required>
-                <option value="" disabled selected>Select a service...</option>
-                <option value="move-in-out">Move In / Move Out Cleaning</option>
-                <option value="apartment">Apartment Turnover Cleaning</option>
-                <option value="office">Office Cleaning</option>
-                <option value="new-home">New Home Cleaning</option>
-                <option value="unsure">Not sure — I need help deciding</option>
-              </select>
-              <svg class="form__select-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 5 L7 9 L11 5" stroke="rgba(28,20,16,0.4)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-
-          <!-- Row 5: Address -->
-          <div class="form__field">
-            <label class="form__label" for="address">Address / Location of Space</label>
-            <input class="form__input" id="address" name="address" type="text" placeholder="Street address or general area" required />
-          </div>
-
-          <!-- Row 6: Message -->
-          <div class="form__field">
-            <label class="form__label" for="message">Message / Additional Details</label>
-            <textarea class="form__textarea" id="message" name="message" rows="4" placeholder="Tell us anything else about your space or what you need..."></textarea>
-          </div>
-
-          <!-- Submit -->
-          <button class="form__submit" type="submit">Send My Request →</button>
-          <p class="form__note">We typically respond within 24 hours. No spam. Ever.</p>
-
-        </form>
+        <div class="tally-wrap">
+          <iframe
+            data-tally-src="https://tally.so/embed/Xx1XbP?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+            loading="lazy"
+            width="100%"
+            height="600"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            title="Lumina Cleaning Services - Request a Quote">
+          </iframe>
+        </div>
       </div>
     </section>
 
@@ -784,7 +747,7 @@
         required.forEach(field => {
           if (!field.value.trim()) {
             valid = false;
-            field.style.borderBottomColor = '#C4956A';
+            field.style.borderBottomColor = '#D8C7B2';
           } else {
             field.style.borderBottomColor = '';
           }
@@ -792,11 +755,35 @@
         if (valid) {
           const btn = form.querySelector('.form__submit');
           btn.textContent = 'Request Sent ✓';
-          btn.style.background = '#C4956A';
+          btn.style.background = '#D8C7B2';
           btn.style.color = '#1C1410';
           btn.disabled = true;
         }
       });
+    }
+  </script>
+
+  <script>
+    var d=document,
+    w="https://tally.so/widgets/embed.js",
+    v=function(){
+      "undefined"!=typeof Tally
+      ?Tally.loadEmbeds()
+      :d.querySelectorAll(
+        "iframe[data-tally-src]:not([src])"
+      ).forEach(function(e){
+        e.src=e.dataset.tallySrc
+      })
+    };
+    if("undefined"!=typeof Tally)v();
+    else if(d.querySelector(
+      'script[src="'+w+'"]'
+    )==null){
+      var s=d.createElement("script");
+      s.src=w;
+      s.onload=v;
+      s.onerror=v;
+      d.body.appendChild(s);
     }
   </script>
 
