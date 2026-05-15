@@ -111,34 +111,36 @@
        SECTION STYLES
     ════════════════════════════════════════════════════════ */
     .services {
-      background: #D8C7B2;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+  background: #D8C7B2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
 
-    .why {
-      background: #1C1410;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border-radius: 24px 24px 0 0;
-      box-shadow: 0 -8px 40px rgba(0,0,0,0.25);
-    }
+.why {
+  background: #1C1410;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
 
-    .about {
-      background: #D8C7B2;
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 55% 45%;
-      align-items: center;
-      border-radius: 24px 24px 0 0;
-      box-shadow: 0 -8px 40px rgba(0,0,0,0.2);
-      overflow: hidden;
-    }
+.about {
+  background: #D8C7B2;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  align-items: center;
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
     /* ════════════════════════════════════════════════════════
        1. NAV
     ════════════════════════════════════════════════════════ */
@@ -437,11 +439,7 @@
     /* ════════════════════════════════════════════════════════
        4. SERVICES
     ════════════════════════════════════════════════════════ */
-    .services {
-      display: flex;
-      flex-direction: column;
-      padding: 0;
-    }
+    
 
     .services__inner {
       flex: 1;
@@ -565,14 +563,7 @@
     /* ════════════════════════════════════════════════════════
        5. WHY LUMINA — The Lumina Standard
     ════════════════════════════════════════════════════════ */
-    .why {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem 2rem;
-    }
-
+    
     .why__header {
       text-align: center;
       margin-bottom: 3rem;
@@ -736,14 +727,6 @@
     /* ════════════════════════════════════════════════════════
        6. ABOUT STRIP — Meet Aislinn
     ════════════════════════════════════════════════════════ */
-    .about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      padding: 0;
-      border-radius: 24px 24px 0 0;
-      overflow: hidden;
-    }
 
     .about__photo {
       height: 100%;
@@ -1287,8 +1270,16 @@
           <li class="service-card">
             <div class="service-card__image"
                  role="img"
-                 aria-label="Move In / Move Out Cleaning — photo coming soon">
-              [ Client photo coming soon ]
+                 aria-label="Move in move out cleaning service San Antonio TX">
+              <img
+                src="Assets/images/Move-in-out-service.jpg"
+                alt="Professional move in move out cleaning service San Antonio TX — Lumina Cleaning Service"
+                title="Move In / Move Out Cleaning San Antonio"
+                loading="lazy"
+                style="width:100%; height:100%;
+                       object-fit:cover;
+                       object-position:center;
+                       display:block;">
             </div>
             <div class="service-card__body">
               <p class="service-card__title">Move In / Move Out Cleaning</p>
@@ -1300,8 +1291,16 @@
           <li class="service-card">
             <div class="service-card__image"
                  role="img"
-                 aria-label="Apartment Turnover Cleaning — photo coming soon">
-              [ Client photo coming soon ]
+                 aria-label="Apartment Turnover Cleaning San Antonio">
+              <img
+                src="Assets/images/Apartment turnover - service.jpg"
+                alt="Apartment turnover cleaning service San Antonio TX — Lumina Cleaning Service"
+                title="Apartment Turnover Cleaning San Antonio"
+                loading="lazy"
+                style="width:100%; height:100%;
+                       object-fit:cover;
+                       object-position:center;
+                       display:block;">
             </div>
             <div class="service-card__body">
               <p class="service-card__title">Apartment Turnover Cleaning</p>
@@ -1313,8 +1312,16 @@
           <li class="service-card">
             <div class="service-card__image"
                  role="img"
-                 aria-label="Office Cleaning — photo coming soon">
-              [ Client photo coming soon ]
+                 aria-label="Office cleaning service San Antonio">
+              <img
+                src="Assets/images/office space - service.jpg"
+                alt="Office cleaning service San Antonio TX — Lumina Cleaning Service"
+                title="Office Cleaning San Antonio"
+                loading="lazy"
+                style="width:100%; height:100%;
+                       object-fit:cover;
+                       object-position:center;
+                       display:block;">
             </div>
             <div class="service-card__body">
               <p class="service-card__title">Office Cleaning</p>
@@ -1326,8 +1333,16 @@
           <li class="service-card">
             <div class="service-card__image"
                  role="img"
-                 aria-label="New Home Cleaning — photo coming soon">
-              [ Client photo coming soon ]
+                 aria-label="New home cleaning service San Antonio TX">
+              <img
+                src="Assets/images/New home - service.jpeg"
+                alt="New home cleaning service San Antonio TX — Lumina Cleaning Service"
+                title="New Home Cleaning San Antonio"
+                loading="lazy"
+                style="width:100%; height:100%;
+                       object-fit:cover;
+                       object-position:center;
+                       display:block;">
             </div>
             <div class="service-card__body">
               <p class="service-card__title">New Home Cleaning</p>
@@ -1382,7 +1397,17 @@
 
         <div class="why__carousel">
           <div class="why__carousel-track" id="carouselTrack">
-            <div class="why__slide"><span>[ Client photo coming soon ]</span></div>
+            <div class="why__slide">
+              <img
+                src="Assets/images/Espejo-office.webp"
+                alt="Office cleaning work by Lumina Cleaning Service San Antonio"
+                loading="lazy"
+                style="width:100%; height:100%;
+                       object-fit:cover;
+                       object-position:center;
+                       border-radius:12px;
+                       display:block;">
+            </div>
             <div class="why__slide"><span>[ Client photo coming soon ]</span></div>
             <div class="why__slide"><span>[ Client photo coming soon ]</span></div>
             <div class="why__slide"><span>[ Client photo coming soon ]</span></div>
@@ -1435,7 +1460,6 @@
       </div>
 
     </section>
-
 
     <!-- ══════════════════════════════════════════════════════
          CONTACT CTA
