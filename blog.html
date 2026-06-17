@@ -3,32 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Lumina Cleaning Service | San Antonio, TX</title>
-  <meta name="description" content="Contact Lumina Cleaning Service in San Antonio, TX. Request a free quote for move in/out, apartment, office, or new home cleaning. Call (254) 447-8622 or fill out our form." />
-  <link rel="canonical" href="https://luminacleaning.com/contact.html" />
+  <title>Cleaning Tips &amp; Local Insights | Lumina Cleaning Service San Antonio</title>
+  <meta name="description" content="Cleaning tips, local insights, and home care advice from Lumina Cleaning Service in San Antonio, TX. Expert advice from 8 years of professional cleaning experience." />
+  <link rel="canonical" href="https://luminacleaning.com/blog.html" />
 
+  <!-- Schema: Blog -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Lumina Cleaning Service",
-    "telephone": "(254) 447-8622",
-    "email": "luminaservices220@outlook.com",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "San Antonio",
-      "addressRegion": "TX",
-      "postalCode": "78208",
-      "addressCountry": "US"
-    },
-    "areaServed": {
-      "@type": "Place",
-      "name": "San Antonio, TX"
-    },
-    "url": "https://luminacleaning.com/contact.html"
+    "@type": "Blog",
+    "name": "Lumina Cleaning Service Blog",
+    "url": "https://luminacleaning.com/blog.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lumina Cleaning Service",
+      "url": "https://luminacleaning.com"
+    }
   }
   </script>
 
+  <!-- Google Fonts: Cormorant Garamond + Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -40,6 +34,8 @@
       --sand:      #D8C7B2;
       --dark:      #1C1410;
       --terra:     #D8C7B2;
+      --text:      #1C1410;
+      --muted:     rgba(28, 20, 16, 0.6);
       --text-dark: #F0E8DC;
       --gold:      #D8C7B2;
       --serif:     'Cormorant Garamond', Georgia, serif;
@@ -51,8 +47,8 @@
     body {
       font-family: var(--sans);
       font-weight: 300;
-      background: #1C1410;
-      color: var(--dark);
+      background: var(--sand);
+      color: var(--text);
       font-size: 16px;
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
@@ -72,8 +68,7 @@
       padding-inline: clamp(1.25rem, 4vw, 2.5rem);
     }
 
-
-    /* ── NAV ── */
+    /* NAV */
     .nav { position: fixed; inset: 0 0 auto; z-index: 300; background: #1C1410; }
     .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 80px; }
     .nav__logo img { height: 64px; width: auto; display: block; }
@@ -102,8 +97,9 @@
     .trust-strip__inner { display: flex; align-items: center; justify-content: center; gap: 2rem; }
     .trust-strip__item { font-size: 0.7rem; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(216,199,178,0.55); }
     .trust-strip__divider { color: rgba(216,199,178,0.25); font-size: 0.7rem; }
+    @media (max-width: 760px) { .nav__links, .nav__book { display: none; } .nav__toggle { display: flex; } }
 
-    /* Dropdown */
+    /* NAV DROPDOWN */
     .nav__dropdown { position: relative; display: flex; align-items: center; }
     .nav__dropdown-trigger { display: flex; align-items: center; gap: 0.35rem; cursor: pointer; }
     .nav__dropdown-arrow { transition: transform 0.25s ease; opacity: 0.6; }
@@ -130,359 +126,222 @@
     .nav__dropdown-item { display: flex; flex-direction: column; gap: 0.2rem; padding: 0.75rem 1rem; border-radius: 8px; text-decoration: none; transition: background 0.2s ease; }
     .nav__dropdown-item:hover { background: rgba(216,199,178,0.08); }
     .nav__dropdown-item + .nav__dropdown-item { border-top: 1px solid rgba(216,199,178,0.06); }
-    .nav__dropdown-title { font-family: var(--serif); font-size: 1rem; color: #D8C7B2; letter-spacing: 0.02em; }
-    .nav__dropdown-sub { font-family: var(--sans); font-size: 0.7rem; font-weight: 300; color: rgba(216,199,178,0.45); letter-spacing: 0.04em; }
-
+    .nav__dropdown-title { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: #D8C7B2; letter-spacing: 0.02em; }
+    .nav__dropdown-sub { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 300; color: rgba(216,199,178,0.45); letter-spacing: 0.04em; }
     @media (max-width: 760px) {
-      .nav__links, .nav__book { display: none; }
-      .nav__toggle { display: flex; }
       .nav__dropdown-menu { position: static; transform: none; opacity: 1; visibility: visible; width: 100%; background: transparent; border: none; box-shadow: none; padding: 0.25rem 0 0.25rem 1rem; display: none; }
       .nav__dropdown.open .nav__dropdown-menu { display: flex; flex-direction: column; }
       .nav__dropdown-title { font-size: 1.1rem; }
     }
 
-
-    /* ── PAGE HERO ── */
-    .contact-hero {
-      position: relative;
+    /* PAGE HERO */
+    .blog-hero {
       background: #1C1410;
-      min-height: 60vh;
+      padding: 10rem 2rem 6rem;
+      text-align: center;
+    }
+    .blog-hero__label {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #D8C7B2;
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+    .blog-hero__h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: #D8C7B2;
+      letter-spacing: -0.01em;
+      margin: 0 auto 1.5rem;
+    }
+    .blog-hero__sub {
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(216,199,178,0.6);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* BLOG GRID */
+    .blog-grid {
+      background: #D8C7B2;
+      padding: 5rem 2rem;
+    }
+    .blog-grid__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    @media (max-width: 768px) { .blog-grid__inner { grid-template-columns: 1fr; } }
+
+    /* BLOG CARD */
+    .blog-card {
+      background: #F5F0EA;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    }
+    .blog-card__image {
+      height: 220px;
+      background: rgba(28,20,16,0.08);
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 8rem 2rem 4rem;
-      overflow: hidden;
+      flex-shrink: 0;
     }
+    .blog-card__image span {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(28,20,16,0.35);
+    }
+    .blog-card__body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .blog-card__category {
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #1C1410;
+      opacity: 0.5;
+      margin-bottom: 0.5rem;
+    }
+    .blog-card__title {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: #1C1410;
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+    }
+    .blog-card__excerpt {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: rgba(28,20,16,0.6);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+    .blog-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .blog-card__date {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: rgba(28,20,16,0.4);
+    }
+    .blog-card__read {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: #1C1410;
+      letter-spacing: 0.08em;
+      transition: opacity 0.2s;
+    }
+    .blog-card:hover .blog-card__read { opacity: 0.6; }
 
-    .contact-hero__bg {
+    /* CTA STRIP */
+    .blog-cta {
+      position: relative;
+      background: #1C1410;
+      padding: 8rem 2rem;
+      border-radius: 24px 24px 0 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .blog-cta__bg {
       position: absolute;
       inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--serif);
-      font-size: clamp(120px, 20vw, 240px);
+      font-size: clamp(120px, 20vw, 220px);
       font-weight: 700;
       line-height: 0.85;
-      color: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.04);
+      text-align: center;
       pointer-events: none;
       user-select: none;
-      letter-spacing: -0.02em;
     }
-
-    .contact-hero__content {
+    .blog-cta__content {
       position: relative;
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
+      text-align: center;
       gap: 1.25rem;
-      max-width: 640px;
+      max-width: 600px;
     }
-
-    .contact-hero__label {
+    .blog-cta__label {
       font-family: var(--sans);
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--terra);
-    }
-
-    .contact-hero__h1 {
-      font-family: var(--serif);
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 300;
-      line-height: 1.1;
-      color: #D8C7B2;
-    }
-
-    .contact-hero__sub {
-      font-family: var(--sans);
-      font-size: 0.9rem;
-      font-weight: 300;
-      color: rgba(216,199,178,0.6);
-      line-height: 1.75;
-      max-width: 480px;
-    }
-
-    .contact-hero__info {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .contact-hero__info-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--sans);
-      font-size: 0.8rem;
-      font-weight: 300;
-      color: rgba(216,199,178,0.55);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .contact-hero__info-item:hover { color: #D8C7B2; }
-
-    .contact-hero__info-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--terra);
-      flex-shrink: 0;
-    }
-
-    @media (max-width: 600px) {
-      .contact-hero__info { flex-direction: column; gap: 0.75rem; }
-    }
-
-
-    /* ── CONTACT FORM ── */
-    .contact-form-section {
-      background: #D8C7B2;
-      border-radius: 24px 24px 0 0;
-      padding: 5rem 2rem 6rem;
-      position: relative;
-    }
-
-    .contact-form-section__inner {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .contact-form-section__label {
-      display: block;
-      font-family: var(--sans);
-      font-size: 0.65rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--terra);
-      text-align: center;
-      margin-bottom: 0.75rem;
-    }
-
-    .contact-form-section__h2 {
-      font-family: var(--serif);
-      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-      font-weight: 300;
-      color: #1C1410;
-      text-align: center;
-      line-height: 1.15;
-      margin-bottom: 0.5rem;
-    }
-
-    .contact-form-section__sub {
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: rgba(28,20,16,0.55);
-      text-align: center;
-      line-height: 1.6;
-      margin-bottom: 3rem;
-    }
-
-    /* Form */
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .tally-wrap {
-      width: 100%;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .tally-wrap iframe {
-      width: 100%;
-      border: none;
-      background: transparent;
-    }
-
-    .form__row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-
-    @media (max-width: 580px) {
-      .form__row { grid-template-columns: 1fr; gap: 0; }
-    }
-
-    .form__field {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .form__label {
-      font-family: var(--sans);
-      font-size: 0.62rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(28,20,16,0.45);
-      margin-bottom: 0.5rem;
-    }
-
-    .form__input,
-    .form__select,
-    .form__textarea {
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(28,20,16,0.2);
-      padding: 0.85rem 0;
-      font-family: var(--sans);
-      font-size: 0.9rem;
-      font-weight: 300;
-      color: #1C1410;
-      width: 100%;
-      outline: none;
-      transition: border-color 0.2s ease;
-      border-radius: 0;
-    }
-
-    .form__input::placeholder,
-    .form__textarea::placeholder { color: rgba(28,20,16,0.35); }
-
-    .form__input:focus,
-    .form__select:focus,
-    .form__textarea:focus { border-bottom-color: #D8C7B2; }
-
-    /* Select */
-    .form__select-wrap {
-      position: relative;
-    }
-
-    .form__select {
-      appearance: none;
-      -webkit-appearance: none;
-      cursor: pointer;
-      padding-right: 2rem;
-    }
-
-    .form__select-arrow {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      color: rgba(28,20,16,0.4);
-    }
-
-    .form__select option { background: #D8C7B2; color: #1C1410; }
-    .form__select option:first-child { color: rgba(28,20,16,0.35); }
-
-    /* Textarea */
-    .form__textarea {
-      resize: vertical;
-      min-height: 100px;
-      line-height: 1.65;
-    }
-
-    /* Submit */
-    .form__submit {
-      width: 100%;
-      background: #1C1410;
-      color: #D8C7B2;
-      padding: 1.1rem;
-      border-radius: 100px;
-      border: none;
-      cursor: pointer;
-      font-family: var(--sans);
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      transition: background 0.3s ease, color 0.3s ease;
-      margin-top: 0.5rem;
-    }
-
-    .form__submit:hover { background: #D8C7B2; color: #1C1410; }
-
-    .form__note {
-      text-align: center;
-      font-family: var(--sans);
-      font-size: 0.72rem;
-      font-weight: 300;
-      color: rgba(28,20,16,0.4);
-      margin-top: 1.25rem;
-      line-height: 1.6;
-    }
-
-
-    /* ── CONTACT INFO STRIP ── */
-    .contact-info {
-      background: #1C1410;
-      padding: 4rem 2rem;
-    }
-
-    .contact-info__inner {
-      max-width: 800px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3rem;
-    }
-
-    .contact-info__col {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .contact-info__rule {
-      width: 40px;
-      height: 1px;
-      background: rgba(216,199,178,0.3);
-      margin-bottom: 1rem;
-    }
-
-    .contact-info__label {
-      font-family: var(--sans);
-      font-size: 0.62rem;
-      font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--terra);
-    }
-
-    .contact-info__value {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      font-weight: 400;
       color: #D8C7B2;
-      line-height: 1.3;
-      text-decoration: none;
-      transition: color 0.2s ease;
-      word-break: break-word;
     }
-
-    a.contact-info__value:hover { color: var(--terra); }
-
-    .contact-info__sub {
-      font-family: var(--sans);
-      font-size: 0.78rem;
+    .blog-cta__h2 {
+      font-family: var(--serif);
+      font-size: 2.5rem;
       font-weight: 300;
+      color: #D8C7B2;
+      line-height: 1.2;
+    }
+    .blog-cta__btn {
+      display: inline-block;
+      padding: 1rem 3rem;
+      background: #D8C7B2;
+      color: #1C1410;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      transition: opacity 0.25s ease;
+      margin-top: 0.25rem;
+    }
+    .blog-cta__btn:hover { opacity: 0.9; }
+    .blog-cta__sub {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
       color: rgba(216,199,178,0.45);
-      line-height: 1.6;
     }
 
-    @media (max-width: 640px) {
-      .contact-info__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    }
-
-
-    /* ── FOOTER ── */
+    /* FOOTER */
     .footer { background: #1C1410; padding: 4rem 2rem 2rem; position: relative; z-index: 7; margin: 0; }
     .footer__inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; padding-bottom: 3rem; border-bottom: 1px solid rgba(216,199,178,0.12); }
     .footer__brand { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
@@ -500,12 +359,7 @@
     .footer__bottom span { font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: rgba(216,199,178,0.3); letter-spacing: 0.05em; }
     .footer__credit { font-family: var(--sans); font-size: 0.72rem; font-weight: 300; color: rgba(216,199,178,0.3); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s ease; }
     .footer__credit:hover { color: #D8C7B2; }
-
-    @media (max-width: 768px) {
-      .footer__inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
-      .footer__brand { grid-column: 1 / -1; }
-      .footer__bottom { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
-    }
+    @media (max-width: 768px) { .footer__inner { grid-template-columns: 1fr 1fr; gap: 2rem; } .footer__brand { grid-column: 1 / -1; } .footer__bottom { flex-direction: column; align-items: flex-start; gap: 0.25rem; } }
     @media (max-width: 480px) { .footer__inner { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -566,7 +420,7 @@
         <span class="trust-strip__divider">|</span>
         <span class="trust-strip__item">San Antonio, TX</span>
         <span class="trust-strip__divider">|</span>
-        <span class="trust-strip__item">Free Quotes</span>
+        <span class="trust-strip__item">Homes · Apartments · Offices</span>
       </div>
     </div>
   </header>
@@ -589,56 +443,117 @@
   <main>
 
     <!-- PAGE HERO -->
-    <section class="contact-hero" aria-labelledby="contact-hero-heading">
-
-      <div class="contact-hero__bg" aria-hidden="true">Hello.</div>
-
-      <div class="contact-hero__content">
-        <span class="contact-hero__label">Get in Touch</span>
-        <h1 class="contact-hero__h1" id="contact-hero-heading">Let's Get Your<br>Space Spotless.</h1>
-        <p class="contact-hero__sub">
-          Fill out the form below and we'll get back to you within 24 hours
-          with a free, no-pressure quote.
-        </p>
-        <div class="contact-hero__info" role="list">
-          <a href="tel:+12544478622" class="contact-hero__info-item" role="listitem">
-            <span class="contact-hero__info-dot" aria-hidden="true"></span>
-            (254) 447-8622
-          </a>
-          <a href="mailto:luminaservices220@outlook.com" class="contact-hero__info-item" role="listitem">
-            <span class="contact-hero__info-dot" aria-hidden="true"></span>
-            luminaservices220@outlook.com
-          </a>
-          <span class="contact-hero__info-item" role="listitem">
-            <span class="contact-hero__info-dot" aria-hidden="true"></span>
-            San Antonio, TX
-          </span>
-        </div>
-      </div>
-
+    <section class="blog-hero" aria-labelledby="blog-hero-heading">
+      <span class="blog-hero__label">Tips · Insights · Advice</span>
+      <h1 class="blog-hero__h1" id="blog-hero-heading">The Lumina Blog</h1>
+      <p class="blog-hero__sub">
+        Cleaning tips, home care advice, and local insights from 8 years
+        of professional experience in San Antonio.
+      </p>
     </section>
 
 
-    <!-- CONTACT FORM -->
-    <section class="contact-form-section" aria-labelledby="form-heading">
-      <div class="contact-form-section__inner">
+    <!-- BLOG GRID -->
+    <section class="blog-grid" aria-labelledby="blog-grid-heading">
+      <h2 id="blog-grid-heading" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Blog Posts</h2>
+      <div class="blog-grid__inner">
 
-        <span class="contact-form-section__label">Free Quote Request</span>
-        <h2 class="contact-form-section__h2" id="form-heading">Tell Us About Your Space.</h2>
-        <p class="contact-form-section__sub">No commitment. No pressure. Just an honest quote.</p>
+        <!-- Card 1 -->
+        <a href="blog-office.html" class="blog-card" aria-label="Why a Clean Workplace Makes Your Team More Productive">
+          <div class="blog-card__image">
+            <img
+              src="Assets/blog/blog-office.jpeg"
+              alt="Office cleaning San Antonio TX — Lumina Cleaning Service"
+              loading="lazy"
+              style="width:100%; height:100%;
+                     object-fit:cover;
+                     object-position:center;
+                     display:block;">
+          </div>
+          <div class="blog-card__body">
+            <p class="blog-card__category">Office Cleaning</p>
+            <h3 class="blog-card__title">Why a Clean Workplace Makes Your Team More Productive</h3>
+            <p class="blog-card__excerpt">
+              A cluttered, dirty workspace doesn't just look bad — it costs you. Research shows
+              employees in clean offices are more focused, take fewer sick days, and feel better
+              about coming to work. If you manage a business in San Antonio, here's why
+              professional office cleaning is one of the smartest investments you can make.
+            </p>
+            <div class="blog-card__footer">
+              <span class="blog-card__date">June 2026</span>
+              <span class="blog-card__read">Read More →</span>
+            </div>
+          </div>
+        </a>
 
-        <div class="tally-wrap">
-          <iframe
-            data-tally-src="https://tally.so/embed/Xx1XbP?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-            loading="lazy"
-            width="100%"
-            height="600"
-            frameborder="0"
-            marginheight="0"
-            marginwidth="0"
-            title="Lumina Cleaning Services - Request a Quote">
-          </iframe>
-        </div>
+        <!-- Card 2 -->
+        <a href="blog-moveinout.html" class="blog-card" aria-label="What Landlords Actually Look For During Move Out Inspections">
+          <div class="blog-card__image">
+            <img
+              src="Assets/blog/blog-moveinout.jpeg"
+              alt="Move in move out cleaning San Antonio TX — Lumina Cleaning Service"
+              loading="lazy"
+              style="width:100%; height:100%;
+                     object-fit:cover;
+                     object-position:center;
+                     display:block;">
+          </div>
+          <div class="blog-card__body">
+            <p class="blog-card__category">Move In / Move Out</p>
+            <h3 class="blog-card__title">What Landlords Actually Look For During Move Out Inspections</h3>
+            <p class="blog-card__excerpt">
+              After years of cleaning homes and apartments across San Antonio, we know exactly
+              what property managers check first. From baseboards to appliances — the details
+              are what determine whether you get your deposit back. Here's what matters most.
+            </p>
+            <div class="blog-card__footer">
+              <span class="blog-card__date">June 2026</span>
+              <span class="blog-card__read">Read More →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 3 -->
+        <a href="blog-residential.html" class="blog-card" aria-label="You're Busy. Your Home Shouldn't Feel Like Another Job.">
+          <div class="blog-card__image">
+            <img
+              src="Assets/blog/blog-residential.jpeg"
+              alt="Residential cleaning service San Antonio TX — Lumina Cleaning Service"
+              loading="lazy"
+              style="width:100%; height:100%;
+                     object-fit:cover;
+                     object-position:center;
+                     display:block;">
+          </div>
+          <div class="blog-card__body">
+            <p class="blog-card__category">Residential Cleaning</p>
+            <h3 class="blog-card__title">You're Busy. Your Home Shouldn't Feel Like Another Job.</h3>
+            <p class="blog-card__excerpt">
+              Between work, kids, and everything life throws at you — cleaning shouldn't be
+              one more thing on your list. San Antonio families trust Lumina to keep their
+              homes fresh, safe, and ready to come home to. Here's how we make it easy.
+            </p>
+            <div class="blog-card__footer">
+              <span class="blog-card__date">June 2026</span>
+              <span class="blog-card__read">Read More →</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+
+    <!-- CTA STRIP -->
+    <section class="blog-cta" aria-labelledby="blog-cta-heading">
+      <div class="blog-cta__bg" aria-hidden="true">Clean.</div>
+      <div class="blog-cta__content">
+        <span class="blog-cta__label">( Ready for a cleaner space? )</span>
+        <h2 class="blog-cta__h2" id="blog-cta-heading">
+          Let's Get Your<br>Space Spotless.
+        </h2>
+        <a href="contact.html" class="blog-cta__btn">Book a Free Quote</a>
+        <p class="blog-cta__sub">(254) 447-8622 · San Antonio, TX</p>
       </div>
     </section>
 
@@ -667,6 +582,7 @@
             <a href="index.html" class="footer__link">Home</a>
             <a href="services.html" class="footer__link">Services</a>
             <a href="about.html" class="footer__link">About</a>
+            <a href="blog.html" class="footer__link">Blog</a>
             <a href="contact.html" class="footer__link">Contact</a>
           </nav>
         </div>
@@ -692,12 +608,11 @@
 
   </main>
 
-
   <script>
-    const nav     = document.getElementById('nav');
-    const toggle  = document.getElementById('navToggle');
+    const nav = document.getElementById('nav');
+    const toggle = document.getElementById('navToggle');
     const overlay = document.getElementById('navOverlay');
-    let   open    = false;
+    let open = false;
 
     toggle.addEventListener('click', () => open ? closeMenu() : openMenu());
     overlay.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMenu));
@@ -721,6 +636,7 @@
       document.body.style.overflow = '';
     }
 
+    // Services dropdown
     const dropdown = document.querySelector('.nav__dropdown');
     const trigger  = document.querySelector('.nav__dropdown-trigger');
     if (trigger) {
@@ -737,56 +653,6 @@
         dropdown.classList.remove('open');
       }
     });
-  </script>
-
-  <script>
-    const form = document.querySelector('.contact-form');
-    if (form) {
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const required = form.querySelectorAll('[required]');
-        let valid = true;
-        required.forEach(field => {
-          if (!field.value.trim()) {
-            valid = false;
-            field.style.borderBottomColor = '#D8C7B2';
-          } else {
-            field.style.borderBottomColor = '';
-          }
-        });
-        if (valid) {
-          const btn = form.querySelector('.form__submit');
-          btn.textContent = 'Request Sent ✓';
-          btn.style.background = '#D8C7B2';
-          btn.style.color = '#1C1410';
-          btn.disabled = true;
-        }
-      });
-    }
-  </script>
-
-  <script>
-    var d=document,
-    w="https://tally.so/widgets/embed.js",
-    v=function(){
-      "undefined"!=typeof Tally
-      ?Tally.loadEmbeds()
-      :d.querySelectorAll(
-        "iframe[data-tally-src]:not([src])"
-      ).forEach(function(e){
-        e.src=e.dataset.tallySrc
-      })
-    };
-    if("undefined"!=typeof Tally)v();
-    else if(d.querySelector(
-      'script[src="'+w+'"]'
-    )==null){
-      var s=d.createElement("script");
-      s.src=w;
-      s.onload=v;
-      s.onerror=v;
-      d.body.appendChild(s);
-    }
   </script>
 
 </body>
