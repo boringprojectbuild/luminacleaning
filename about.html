@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>About Lumina Cleaning Service | Aislinn Venegas | San Antonio, TX</title>
   <meta name="description" content="Meet Aislinn Venegas, founder of Lumina Cleaning Service in San Antonio, TX. Woman-owned, built on 8 years of experience and a standard of care that sets us apart. Trusted across San Antonio and surrounding communities." />
   <link rel="canonical" href="https://luminacleaning.com/about.html" />
@@ -490,6 +490,76 @@
       .footer__bottom { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
     }
     @media (max-width: 480px) { .footer__inner { grid-template-columns: 1fr; } }
+
+    /* ─── MOBILE RESPONSIVE FIXES ─────────────────────── */
+    @media (max-width: 760px) {
+      /* Trust strip */
+      .trust-strip { padding: 0.5rem 1rem; }
+      .trust-strip__inner { flex-direction: column; gap: 0.2rem; text-align: center; }
+      .trust-strip__item { font-size: 0.72rem; white-space: normal; text-align: center; }
+      .trust-strip__divider { display: none; }
+
+      /* Nav overlay */
+      .nav__overlay-links a { font-size: clamp(1.8rem, 7vw, 2.5rem); line-height: 1.4; }
+      .nav__overlay-book { font-size: 0.75rem; padding: 0.6rem 1.75rem; margin-top: 1.5rem; }
+
+      /* Dead space removal */
+      main { padding-bottom: 0; margin-bottom: 0; }
+      body { padding-bottom: 0; margin-bottom: 0; }
+      .cta { min-height: 50vh; }
+
+      /* Footer */
+      .footer { padding: 3rem 1.5rem 2rem; }
+      .footer__inner { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      /* Container */
+      .container { padding-inline: 1.25rem; }
+
+      /* Headings */
+      h1 { font-size: clamp(1.8rem, 7vw, 2.5rem) !important; }
+      h2 { font-size: clamp(1.5rem, 5vw, 2rem) !important; }
+
+      /* Service / services grid */
+      .service-card { width: 100%; }
+      .services-grid { grid-template-columns: 1fr; }
+
+      /* CTA bg text */
+      .cta__bg-text { font-size: clamp(50px, 15vw, 90px); }
+
+      /* Blog grid */
+      .blog-grid__inner { grid-template-columns: 1fr; }
+
+      /* About (homepage section) */
+      .about { grid-template-columns: 1fr; }
+      .about__photo { min-height: 60vh; height: 60vh; }
+      .about__content { padding: 2.5rem 1.5rem; }
+      .about__heading { font-size: 3rem; }
+
+      /* Why pillars */
+      .why__pillars { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      /* Process steps */
+      .process__steps { grid-template-columns: 1fr; gap: 2rem; }
+
+      /* Pricing cards */
+      .pricing__cards { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      /* About hero — Fix 4: full-bleed photo, gradient text overlay */
+      .about-hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
+      .about-hero .about__photo { position: absolute; inset: 0; height: 100%; z-index: 0; padding-top: 0; }
+      .about-hero .about__headshot { width: 100%; height: 100%; object-fit: cover; object-position: center top; transform: none; margin: 0; filter: brightness(0.75); }
+      .about-hero__left { position: relative; z-index: 2; padding: 2rem 1.5rem 3rem; background: linear-gradient(to top, rgba(28,20,16,0.95) 0%, rgba(28,20,16,0.75) 40%, rgba(28,20,16,0.2) 75%, transparent 100%); width: 100%; justify-content: flex-start; min-height: unset; }
+      .about-hero__h1 { color: #D8C7B2; font-size: 2.8rem; }
+      .about-hero__intro { color: rgba(216,199,178,0.9); font-size: 1rem; }
+      .about-hero__sub { color: rgba(216,199,178,0.75); font-size: 0.85rem; }
+      .about-hero__arrow { border-color: rgba(216,199,178,0.4); color: #D8C7B2; }
+    }
+
+    @media (max-width: 760px) {
+      .nav { position: fixed; z-index: 300; }
+      .trust-strip { position: relative; z-index: 299; }
+      main { padding-top: 0; }
+    }
   </style>
 </head>
 <body>
