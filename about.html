@@ -90,8 +90,8 @@
     .nav__overlay-links { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; text-align: center; flex: 1; justify-content: center; }
     .nav__overlay-links a { font-family: var(--serif); font-weight: 300; font-size: clamp(2.75rem, 10vw, 3.75rem); letter-spacing: 0.02em; color: var(--text-dark); line-height: 1.5; transition: color 0.2s; }
     .nav__overlay-links a:hover { color: var(--terra); }
-    .nav__overlay-book { display: inline-block; font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.75rem 2.25rem; border-radius: 999px; border: 1px solid var(--gold); color: var(--gold); margin-top: 2.5rem; transition: background 0.25s, color 0.25s; }
-    .nav__overlay-book:hover { background: var(--terra); border-color: var(--terra); color: #1C1410; }
+    .nav__overlay-book { display: inline-block; font-family: 'Inter', sans-serif; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 999px; border: none; background: #D8C7B2; color: #1C1410 !important; margin-top: 0.75rem; transition: opacity 0.25s ease; white-space: nowrap; width: auto; text-align: center; text-decoration: none; line-height: 1; }
+    .nav__overlay-book:hover { opacity: 0.85; color: #1C1410 !important; }
     .nav__overlay-contact { align-self: flex-start; padding-top: 2rem; }
     .nav__overlay-contact p { font-size: 0.8125rem; font-weight: 300; color: rgba(240,232,220,0.4); line-height: 1.9; }
     .nav__overlay-contact a { color: rgba(240,232,220,0.4); transition: color 0.2s; }
@@ -500,8 +500,13 @@
       .trust-strip__divider { display: none; }
 
       /* Nav overlay */
-      .nav__overlay-links a { font-size: clamp(1.8rem, 7vw, 2.5rem); line-height: 1.4; }
-      .nav__overlay-book { font-size: 0.75rem; padding: 0.6rem 1.75rem; margin-top: 1.5rem; }
+      .nav__overlay { padding: 2rem 1.5rem; justify-content: flex-start; gap: 0; }
+      .nav__overlay-logo { width: 100%; display: flex; justify-content: center; padding: 1rem 0 2rem; border-bottom: 1px solid rgba(216,199,178,0.12); margin-bottom: 1.5rem; }
+      .nav__overlay-links { gap: 0; width: 100%; }
+      .nav__overlay-links a { font-size: 1.8rem !important; line-height: 1.6 !important; padding: 0.25rem 0; width: 100%; text-align: center; }
+      .nav__overlay-book { font-size: 0.75rem !important; padding: 0.6rem 1.5rem !important; margin-top: 1rem !important; letter-spacing: 0.1em !important; border-width: 1px !important; display: inline-block !important; width: auto !important; }
+      .nav__overlay-contact { margin-top: auto; padding-top: 1.5rem; align-self: center; text-align: center; }
+      .nav__overlay-contact p { font-size: 0.75rem; }
 
       /* Dead space removal */
       main { padding-bottom: 0; margin-bottom: 0; }
@@ -557,7 +562,7 @@
 
     @media (max-width: 760px) {
       .nav { position: fixed; z-index: 300; }
-      .trust-strip { position: relative; z-index: 299; }
+      .trust-strip { display: none !important; }
       main { padding-top: 0; }
     }
   </style>
@@ -624,18 +629,37 @@
     </div>
   </header>
 
-  <div class="nav__overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Site navigation">
-    <nav class="nav__overlay-links" aria-label="Mobile navigation">
+  <div class="nav__overlay" id="navOverlay"
+       role="dialog" aria-modal="true"
+       aria-label="Site navigation">
+
+    <!-- Logo at top -->
+    <div class="nav__overlay-logo">
+      <img
+        src="Assets/images/Lumina-logo-sandstone.png"
+        alt="Lumina Cleaning Service"
+        style="height: 70px; width: auto;">
+    </div>
+
+    <nav class="nav__overlay-links"
+         aria-label="Mobile navigation">
+      <a href="index.html">Home</a>
       <a href="services.html">Services</a>
       <a href="about.html">About</a>
       <a href="blog.html">Blog</a>
       <a href="contact.html">Contact</a>
-      <a href="contact.html" class="nav__overlay-book">Book a Cleaning</a>
+      <a href="contact.html"
+         class="nav__overlay-book">
+        Book a Cleaning
+      </a>
     </nav>
-    <address class="nav__overlay-contact" style="font-style:normal;">
+
+    <address class="nav__overlay-contact"
+             style="font-style:normal;">
       <p><a href="tel:+12544478622">(254) 447-8622</a></p>
       <p><a href="mailto:luminaservices220@outlook.com">luminaservices220@outlook.com</a></p>
     </address>
+
   </div>
 
 
