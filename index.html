@@ -1171,9 +1171,9 @@
       /* Pricing cards */
       .pricing__cards { grid-template-columns: 1fr; gap: 1.5rem; }
 
-      /* Hero video — Fix 1 */
-      .hero { width: 100%; max-width: 100vw; overflow: hidden; height: 100svh; }
-      .hero__video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; transform: none; }
+      /* Hero mobile — portrait image replaces video */
+      .hero__video { display: none !important; }
+      .hero { background-image: url('Assets/images/Luminacleaning-hero-mobile.jpg') !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important; background-color: #E8DFD0 !important; height: 100svh !important; width: 100% !important; overflow: hidden !important; }
 
       /* Carousel — Fix 2: 1 slide per view on mobile */
       .why__carousel { overflow: hidden; width: 100%; }
