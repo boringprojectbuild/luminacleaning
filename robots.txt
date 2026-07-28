@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://luminacleaningservices.net/sitemap.xml
