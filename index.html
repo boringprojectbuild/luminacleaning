@@ -1199,6 +1199,64 @@
       .trust-strip { display: none !important; }
       main { padding-top: 0; }
     }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .anim-fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease,
+                  transform 0.7s ease;
+    }
+
+    .anim-fade-in {
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .anim-scale-up {
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.7s ease,
+                  transform 0.7s ease;
+    }
+
+    .anim-slide-left {
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.7s ease,
+                  transform 0.7s ease;
+    }
+
+    .anim-slide-right {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.7s ease,
+                  transform 0.7s ease;
+    }
+
+    .anim-visible {
+      opacity: 1 !important;
+      transform: translateY(0)
+                 translateX(0)
+                 scale(1) !important;
+    }
+
+    .anim-delay-1 { transition-delay: 0.1s; }
+    .anim-delay-2 { transition-delay: 0.2s; }
+    .anim-delay-3 { transition-delay: 0.3s; }
+    .anim-delay-4 { transition-delay: 0.4s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim-fade-up,
+      .anim-fade-in,
+      .anim-scale-up,
+      .anim-slide-left,
+      .anim-slide-right {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1362,12 +1420,12 @@
 
       <!-- Services content -->
       <div class="services__inner">
-        <h2 class="services__heading" id="services-heading">What We Offer</h2>
-        <p class="services__sub">From move-in ready to daily upkeep — we handle every detail.</p>
+        <h2 class="services__heading anim-fade-up" id="services-heading">What We Offer</h2>
+        <p class="services__sub anim-fade-up anim-delay-1">From move-in ready to daily upkeep — we handle every detail.</p>
 
         <ul class="services__grid" role="list">
 
-          <li class="service-card">
+          <li class="service-card anim-fade-up anim-delay-1">
             <div class="service-card__image"
                  role="img"
                  aria-label="Move in move out cleaning service San Antonio TX">
@@ -1388,7 +1446,7 @@
             </div>
           </li>
 
-          <li class="service-card">
+          <li class="service-card anim-fade-up anim-delay-2">
             <div class="service-card__image"
                  role="img"
                  aria-label="Apartment Turnover Cleaning San Antonio">
@@ -1409,7 +1467,7 @@
             </div>
           </li>
 
-          <li class="service-card">
+          <li class="service-card anim-fade-up anim-delay-3">
             <div class="service-card__image"
                  role="img"
                  aria-label="Office cleaning service San Antonio">
@@ -1430,7 +1488,7 @@
             </div>
           </li>
 
-          <li class="service-card">
+          <li class="service-card anim-fade-up anim-delay-4">
             <div class="service-card__image"
                  role="img"
                  aria-label="New home cleaning service San Antonio TX">
@@ -1464,26 +1522,26 @@
 
       <!-- Section Header -->
       <div class="why__header">
-        <h2 class="why__heading" id="why-heading">The Lumina Standard</h2>
-        <p class="why__sub">What sets every clean apart.</p>
+        <h2 class="why__heading anim-fade-up" id="why-heading">The Lumina Standard</h2>
+        <p class="why__sub anim-fade-up anim-delay-1">What sets every clean apart.</p>
       </div>
 
       <!-- Three Pillars -->
       <div class="why__pillars">
 
-        <div class="why__pillar">
+        <div class="why__pillar anim-fade-up anim-delay-1">
           <div class="why__pillar-rule"></div>
           <h3 class="why__pillar-title">Detail-Obsessed</h3>
           <p class="why__pillar-desc">Every corner. Every surface. We don't rush what matters.</p>
         </div>
 
-        <div class="why__pillar">
+        <div class="why__pillar anim-fade-up anim-delay-2">
           <div class="why__pillar-rule"></div>
           <h3 class="why__pillar-title">Built on Trust</h3>
           <p class="why__pillar-desc">8 years of experience, built one satisfied client at a time.</p>
         </div>
 
-        <div class="why__pillar">
+        <div class="why__pillar anim-fade-up anim-delay-3">
           <div class="why__pillar-rule"></div>
           <h3 class="why__pillar-title">Your Schedule</h3>
           <p class="why__pillar-desc">We work around your life — not the other way around.</p>
@@ -1492,7 +1550,7 @@
       </div>
 
       <!-- Work Carousel -->
-      <div class="why__carousel-wrap">
+      <div class="why__carousel-wrap anim-fade-up anim-delay-2">
         <h3 class="why__carousel-label">Our Work</h3>
 
         <div class="why__carousel">
@@ -1586,7 +1644,7 @@
     <section class="about" id="about" aria-labelledby="about-heading">
 
       <!-- Left — Photo -->
-      <div class="about__photo">
+      <div class="about__photo anim-slide-left">
         <img
           src="Assets/images/Lumina-Cleaning-headshot2.png"
           alt="Aislinn Venegas founder of Lumina Cleaning Service San Antonio"
@@ -1596,19 +1654,19 @@
       <!-- Right — Text -->
       <div class="about__content">
 
-        <span class="about__label">The Woman Behind the Standard</span>
+        <span class="about__label anim-fade-up">The Woman Behind the Standard</span>
 
-        <h2 class="about__heading" id="about-heading">Aislinn.</h2>
+        <h2 class="about__heading anim-fade-up anim-delay-1" id="about-heading">Aislinn.</h2>
 
-        <blockquote class="about__quote">
+        <blockquote class="about__quote anim-fade-up anim-delay-2">
           "You can tell the difference between a space that was cleaned and one that was cared for. That's the standard I bring to every home."
         </blockquote>
 
-        <p class="about__text">
+        <p class="about__text anim-fade-up anim-delay-3">
           Aislinn Venegas founded Lumina Cleaning Service after 8 years of hands-on experience. Originally from Chihuahua, Mexico, she built her reputation in San Antonio one home at a time — through referrals, trust, and work that speaks for itself.
         </p>
 
-        <a href="about.html" class="about__btn">Our Story</a>
+        <a href="about.html" class="about__btn anim-fade-up anim-delay-4">Our Story</a>
 
       </div>
 
@@ -1619,13 +1677,13 @@
     ════════════════════════════════════════════════════════ -->
     <section class="cta" id="contact-cta" aria-labelledby="cta-heading">
 
-      <div class="cta__bg-text" aria-hidden="true">
+      <div class="cta__bg-text anim-fade-in" aria-hidden="true">
         Your space,<br>elevated.
       </div>
 
       <div class="cta__content">
 
-        <span class="cta__label">
+        <span class="cta__label anim-fade-up">
           ( Ready for a cleaner space? )
         </span>
 
@@ -1633,7 +1691,7 @@
           Move In/Out · Apartment · Office · New Home
         </p>
 
-        <a href="contact.html" class="cta__btn">
+        <a href="contact.html" class="cta__btn anim-scale-up anim-delay-2">
           Book a Cleaning →
         </a>
 
@@ -1893,6 +1951,30 @@
   });
   </script>
 
+  <script>
+  const animElements = document.querySelectorAll(
+    '.anim-fade-up, .anim-fade-in, ' +
+    '.anim-scale-up, .anim-slide-left, ' +
+    '.anim-slide-right'
+  );
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('anim-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    }
+  );
+
+  animElements.forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
