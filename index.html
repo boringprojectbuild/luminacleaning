@@ -150,12 +150,33 @@
       position: fixed;
       inset: 0 0 auto;
       z-index: 300;
-      background: #1C1410;
-      transition: backdrop-filter 0.45s ease;
+      background: transparent;
+      transition: transform 0.45s ease;
+      will-change: transform;
     }
     .nav.scrolled {
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
+    }
+
+    .nav .container {
+      background: #1C1410;
+      border-radius: 20px;
+      margin-top: 1rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav--hidden {
+      transform: translateY(-130%);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nav {
+        transition: none;
+      }
+      .nav--hidden {
+        transform: none !important;
+      }
     }
 
     .nav__inner {
@@ -315,6 +336,22 @@
       .nav__dropdown-title { font-size: 1.1rem; }
     }
 
+    @media (max-width: 760px) {
+      .nav {
+        background: #1C1410;
+        transition: none;
+      }
+      .nav .container {
+        background: transparent;
+        border-radius: 0;
+        margin-top: 0;
+        box-shadow: none;
+      }
+      .nav--hidden {
+        transform: none !important;
+      }
+    }
+
 
     /* ════════════════════════════════════════════════════════
        2. HERO
@@ -395,6 +432,7 @@
     .trust { display: none; }
 
     .trust-strip {
+      display: none;
       width: 100%;
       background: #1C1410;
       border-top: 1px solid rgba(216, 199, 178, 0.15);
@@ -1862,6 +1900,53 @@
         dropdown.classList.remove('open');
       }
     });
+  </script>
+
+  <script>
+  (function() {
+    const navHeader = document.getElementById('nav');
+    const ctaSection = document.getElementById('contact-cta');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let lastScrollY = window.scrollY;
+    let locked = false;
+    const HIDE_THRESHOLD = 80; // don't start hiding until scrolled at least this far from the top
+
+    function isDesktop() {
+      return window.innerWidth > 760;
+    }
+
+    function updateLockState() {
+      if (!ctaSection) return;
+      const rect = ctaSection.getBoundingClientRect();
+      // Once the final CTA/footer section has scrolled up to the top of the
+      // viewport, lock the nav permanently visible for the rest of the page.
+      locked = rect.top <= 0;
+    }
+
+    function onScroll() {
+      if (reducedMotion || !isDesktop()) return; // CSS overrides already keep it visible in these cases
+
+      updateLockState();
+      const currentY = window.scrollY;
+
+      if (locked) {
+        navHeader.classList.remove('nav--hidden');
+        lastScrollY = currentY;
+        return;
+      }
+
+      if (currentY > lastScrollY && currentY > HIDE_THRESHOLD) {
+        navHeader.classList.add('nav--hidden'); // scrolling down, past threshold
+      } else if (currentY < lastScrollY) {
+        navHeader.classList.remove('nav--hidden'); // scrolling up, any amount
+      }
+
+      lastScrollY = currentY;
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
   </script>
 
 
