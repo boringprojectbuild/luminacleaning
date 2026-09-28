@@ -69,6 +69,7 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      overflow-x: clip;
     }
 
     body {
@@ -80,6 +81,7 @@
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      overflow-x: clip;
       margin: 0;
       padding: 0;
     }
@@ -425,6 +427,32 @@
       stroke: var(--dark);
     }
 
+    /* ── STICKY STACK (desktop only) ──
+       Hero stays pinned while Services scrolls up and over it. Mobile keeps
+       its existing negative-margin rise-over effect (see the max-width: 760px
+       block) and is untouched by this rule. */
+    @media (min-width: 761px) {
+      /* 200vh wrapper gives the hero 100vh of extra scroll distance to stay pinned,
+         and releases it when the wrapper scrolls away. */
+      .hero-stack { height: 200vh; }
+
+      .hero {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+
+      /* Services is NOT sticky. Pulled up 100vh so it overlaps the hero's pinned
+         zone and slides up over it as the user scrolls. */
+      .services {
+        position: relative;
+        z-index: 2;
+        margin-top: -100vh;
+        border-radius: 24px 24px 0 0;
+        box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.25);
+      }
+    }
+
 
     /* ════════════════════════════════════════════════════════
        3. TRUST BAR
@@ -475,7 +503,11 @@
     /* ════════════════════════════════════════════════════════
        4. SERVICES
     ════════════════════════════════════════════════════════ */
-    
+
+    /* Hidden by default — only shown at desktop widths, see media query below */
+    .services-story {
+      display: none;
+    }
 
     .services__inner {
       flex: 1;
@@ -524,6 +556,104 @@
       .services__grid {
         grid-template-columns: 1fr;
         padding: 0 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .services-story__panel {
+        transition: none;
+      }
+    }
+
+    /* Final say on grid vs. story visibility — placed last and !important on
+       both sides so no earlier rule (regardless of source order) can win the
+       cascade on the display property. */
+    @media (min-width: 1025px) {
+      .services__grid {
+        display: none !important;
+      }
+
+      .services-story {
+        display: grid !important;
+        grid-template-columns: 320px 1fr;
+        gap: 4rem;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 2rem 0;
+      }
+
+      .services-story__list {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+
+      .services-story__item {
+        all: unset;
+        cursor: pointer;
+        padding: 1.25rem 0;
+        border-bottom: 1px solid rgba(28, 20, 16, 0.12);
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: rgba(28, 20, 16, 0.4);
+        transition: color 0.3s ease, padding-left 0.3s ease;
+      }
+
+      .services-story__item:hover {
+        color: rgba(28, 20, 16, 0.7);
+      }
+
+      .services-story__item.is-active {
+        color: var(--dark);
+        padding-left: 0.75rem;
+        border-bottom-color: var(--dark);
+      }
+
+      .services-story__visual {
+        position: sticky;
+        top: 140px; /* clears the floating nav pill + spacing */
+        height: fit-content;
+      }
+
+      .services-story__panel {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .services-story__panel[style*="opacity:1"] {
+        display: block;
+      }
+
+      .services-story__panel img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        border-radius: 16px;
+        display: block;
+        margin-bottom: 1.5rem;
+      }
+
+      .services-story__desc {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        font-weight: 300;
+        color: rgba(28, 20, 16, 0.75);
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        max-width: 420px;
+      }
+
+      .services-story__link {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--dark);
+        border-bottom: 1px solid var(--dark);
+        padding-bottom: 2px;
       }
     }
 
@@ -1423,41 +1553,43 @@
     <!-- ══════════════════════════════════════════════════════
          HERO
     ════════════════════════════════════════════════════════ -->
-    <section class="hero" id="hero">
+    <div class="hero-stack">
+      <section class="hero" id="hero">
 
-      <video
-        id="videoA"
-        class="hero__video active"
-        src="Assets/video/hero-loop.mp4"
-        autoplay
-        muted
-        playsinline
-        preload="auto"
-        aria-hidden="true">
-      </video>
+        <video
+          id="videoA"
+          class="hero__video active"
+          src="Assets/video/hero-loop.mp4"
+          autoplay
+          muted
+          playsinline
+          preload="auto"
+          aria-hidden="true">
+        </video>
 
-      <video
-        id="videoB"
-        class="hero__video"
-        src="Assets/video/hero-loop.mp4"
-        muted
-        playsinline
-        preload="auto"
-        aria-hidden="true">
-      </video>
+        <video
+          id="videoB"
+          class="hero__video"
+          src="Assets/video/hero-loop.mp4"
+          muted
+          playsinline
+          preload="auto"
+          aria-hidden="true">
+        </video>
 
-      <a href="#services" class="hero__arrow"
-         aria-label="Scroll to next section">
-        <svg width="32" height="32" viewBox="0 0 32 32"
-             fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 12 L16 20 L24 12"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        </svg>
-      </a>
+        <a href="#services" class="hero__arrow"
+           aria-label="Scroll to next section">
+          <svg width="32" height="32" viewBox="0 0 32 32"
+               fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 12 L16 20 L24 12"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"/>
+          </svg>
+        </a>
 
-    </section>
+      </section>
+    </div>
 
 
     <!-- ══════════════════════════════════════════════════════
@@ -1557,6 +1689,46 @@
           </li>
 
         </ul>
+
+        <div class="services-story" aria-hidden="false">
+          <div class="services-story__list" role="list">
+            <button class="services-story__item is-active" data-index="0" role="listitem">
+              <span class="services-story__item-title">Move In / Move Out Cleaning</span>
+            </button>
+            <button class="services-story__item" data-index="1" role="listitem">
+              <span class="services-story__item-title">Apartment Turnover Cleaning</span>
+            </button>
+            <button class="services-story__item" data-index="2" role="listitem">
+              <span class="services-story__item-title">Office Cleaning</span>
+            </button>
+            <button class="services-story__item" data-index="3" role="listitem">
+              <span class="services-story__item-title">New Home Cleaning</span>
+            </button>
+          </div>
+
+          <div class="services-story__visual">
+            <div class="services-story__panel" data-index="0" style="opacity:1;">
+              <img src="Assets/images/Move-in-out-service.jpg" alt="Professional move in move out cleaning service San Antonio TX — Lumina Cleaning Service" loading="lazy">
+              <p class="services-story__desc">A thorough, top-to-bottom clean so your next chapter starts fresh.</p>
+              <a href="move-in-out.html" class="services-story__link">Learn More →</a>
+            </div>
+            <div class="services-story__panel" data-index="1">
+              <img src="Assets/images/Apartment turnover - service.jpg" alt="Apartment turnover cleaning service San Antonio TX — Lumina Cleaning Service" loading="lazy">
+              <p class="services-story__desc">Fast, detailed turnovers that keep your units tenant-ready.</p>
+              <a href="apartment.html" class="services-story__link">Learn More →</a>
+            </div>
+            <div class="services-story__panel" data-index="2">
+              <img src="Assets/images/office space - service.jpg" alt="Office cleaning service San Antonio TX — Lumina Cleaning Service" loading="lazy">
+              <p class="services-story__desc">A clean workspace done right — so your team can focus.</p>
+              <a href="office.html" class="services-story__link">Learn More →</a>
+            </div>
+            <div class="services-story__panel" data-index="3">
+              <img src="Assets/images/New home - service.jpeg" alt="New home cleaning service San Antonio TX — Lumina Cleaning Service" loading="lazy">
+              <p class="services-story__desc">Before you unpack, we make sure every surface is spotless.</p>
+              <a href="new-home.html" class="services-story__link">Learn More →</a>
+            </div>
+          </div>
+        </div>
       </div>
 
     </section>
@@ -2068,6 +2240,49 @@
   );
 
   animElements.forEach(el => observer.observe(el));
+  </script>
+
+  <script>
+  (function() {
+    const storyItems = document.querySelectorAll('.services-story__item');
+    const storyPanels = document.querySelectorAll('.services-story__panel');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!storyItems.length || !storyPanels.length) return;
+
+    function setActive(index) {
+      storyItems.forEach(item => {
+        item.classList.toggle('is-active', item.dataset.index === String(index));
+      });
+      storyPanels.forEach(panel => {
+        const isMatch = panel.dataset.index === String(index);
+        panel.style.opacity = isMatch ? '1' : '0';
+        panel.style.display = isMatch ? 'block' : 'none';
+      });
+    }
+
+    // Click a list item — jump straight to that service, no scroll-driven ambiguity
+    storyItems.forEach(item => {
+      item.addEventListener('click', () => {
+        setActive(item.dataset.index);
+      });
+    });
+
+    // Scroll-driven active state via IntersectionObserver
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const index = entry.target.dataset.index;
+          setActive(index);
+        }
+      });
+    }, {
+      threshold: 0.6,
+      rootMargin: '-20% 0px -20% 0px'
+    });
+
+    storyItems.forEach(item => observer.observe(item));
+  })();
   </script>
 
   <script src="lumina-loader.js"></script>
