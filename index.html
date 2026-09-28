@@ -723,14 +723,7 @@
         bottom: calc(var(--ci-bottom, 0px) * -1 * var(--expand, 0));
         left:   calc(var(--ci-left, 0px)   * -1 * var(--expand, 0));
         border-radius: calc(20px * (1 - var(--expand, 0)));
-      }
-      .services-story__panel--expand::after {
-        content: '';
-        position: absolute;
-        inset: 0;
         background: var(--dark);
-        opacity: calc(var(--expand, 0) * 0.5);
-        pointer-events: none;
       }
       .services-story__panel--expand .services-story__card { z-index: 2; }
 
@@ -763,25 +756,35 @@
       @supports (overflow: clip) {
         main {
           /* Timeline, in vh of scroll. The JS reads these same values. */
-          --svc-count: 4;    /* number of service tabs (NOT counting "Discover More") */
+          --svc-count: 4;    /* service tabs (NOT counting "Discover More") */
           --svc-seg:   75;   /* scroll per service tab */
-          --svc-dwell: 40;   /* "Discover More" shown before the image starts growing */
-          --svc-grow:  100;  /* image expands to full-bleed */
-          --svc-rise:  100;  /* Lumina Standard rises over the expanded image */
+          --svc-dwell: 25;   /* miniature sits in the image box before it starts growing */
+          --svc-grow:  90;   /* miniature grows into the full section */
         }
         .services {
-          height: calc((100 + var(--svc-seg) * var(--svc-count) + var(--svc-dwell) + var(--svc-grow) + var(--svc-rise)) * 1vh);
+          height: calc((100 + var(--svc-seg) * var(--svc-count) + var(--svc-dwell) + var(--svc-grow)) * 1vh);
         }
         .services-story { position: sticky; top: 0; }
 
-        /* Pulled up over the pinned stage's last --svc-rise vh so it slides over the
-           full-bleed image. Gated exactly like the pin, so it can never overlap
-           un-pinned content (mobile, tablet, reduced-motion all keep normal flow). */
+        /* #why's natural (untransformed) position: its top edge reaches the viewport
+           top exactly when the pin releases. During the pin the JS scales and moves it
+           with a transform. NEVER add transition: transform or will-change here. */
         .why {
           position: relative;
           z-index: 3;
-          margin-top: calc(var(--svc-rise) * -1vh);
+          margin-top: -100vh;
+          transform-origin: 0 0;
         }
+        .why.is-thumb {
+          opacity: 0;
+          pointer-events: none;
+          box-shadow: none;
+          transition: opacity 0.7s ease;
+        }
+        .why.is-thumb.is-shown { opacity: 1; }
+
+        /* The miniature IS the content in pinned mode, so the fallback card is hidden. */
+        .services-story__panel--expand .services-story__card { display: none; }
       }
     }
 
@@ -1865,9 +1868,8 @@
               </div>
             </article>
             <article class="services-story__panel services-story__panel--expand" data-index="4">
-              <img src="Assets/images/Espejo-office.webp" alt="Freshly cleaned space by Lumina Cleaning Service, San Antonio TX" loading="lazy" decoding="async">
               <div class="services-story__card">
-                <p class="services-story__desc">See the standard behind every Lumina clean.</p>
+                <p class="services-story__desc">See what sets every Lumina clean apart.</p>
                 <a href="#why" class="services-story__link">Explore the Standard →</a>
               </div>
             </article>
@@ -2390,14 +2392,19 @@
   (function () {
     const section = document.getElementById('services');
     const stage = section && section.querySelector('.services-story');
-    if (!stage) return;
+    const why = document.getElementById('why');
+    const main = document.querySelector('main');
+    if (!stage || !why || !main) return;
 
     const items  = Array.from(stage.querySelectorAll('.services-story__item'));
     const panels = Array.from(stage.querySelectorAll('.services-story__panel'));
     const visual = stage.querySelector('.services-story__visual');
-    const last = items.length - 1;   // the final item ("Discover More") triggers the expansion
-    let active = -1;                 // -1 so the first render applies state
+    const last = items.length - 1;   // final item ("Discover More")
+    let active = -1;
     let ticking = false;
+    let thumbOn = false;             // true while #why is displayed as the miniature
+    let slot = { left: 0, top: 0, width: 1, height: 1 };  // image slot, stage-relative px
+    let stageW = 1, stageH = 1;
 
     const isPinned = () => getComputedStyle(stage).position === 'sticky';
     const clamp01 = (x) => Math.min(1, Math.max(0, x));
@@ -2410,23 +2417,29 @@
         const v = parseFloat(cs.getPropertyValue(name));
         return Number.isNaN(v) ? fallback : v;
       };
-      return {
-        seg:   num('--svc-seg', 75),
-        dwell: num('--svc-dwell', 40),
-        grow:  num('--svc-grow', 100),
-        rise:  num('--svc-rise', 100)
-      };
+      return { seg: num('--svc-seg', 75), dwell: num('--svc-dwell', 25), grow: num('--svc-grow', 90) };
     }
 
-    // Distance from the image slot to each stage edge (px): how far the fifth panel
-    // must grow. Re-measured on resize.
+    // Slot geometry (stage-relative). Also feeds the dark card's growth variables.
     function measure() {
       const s = stage.getBoundingClientRect();
       const v = visual.getBoundingClientRect();
+      slot = { left: v.left - s.left, top: v.top - s.top, width: v.width, height: v.height };
+      stageW = s.width;
+      stageH = s.height;
       stage.style.setProperty('--ci-top',    (v.top - s.top) + 'px');
       stage.style.setProperty('--ci-right',  (s.right - v.right) + 'px');
       stage.style.setProperty('--ci-bottom', (s.bottom - v.bottom) + 'px');
       stage.style.setProperty('--ci-left',   (v.left - s.left) + 'px');
+    }
+
+    // The miniature must be fully visible from the first frame: pre-reveal every
+    // animated element inside #why and load its images eagerly. Pinned mode only.
+    function primeWhy() {
+      if (!isPinned()) return;
+      why.querySelectorAll('.anim-fade-up, .anim-fade-in, .anim-scale-up, .anim-slide-left, .anim-slide-right')
+        .forEach((el) => el.classList.add('anim-visible'));
+      why.querySelectorAll('img[loading="lazy"]').forEach((img) => { img.loading = 'eager'; });
     }
 
     function render(index, segProgress, expand) {
@@ -2447,13 +2460,46 @@
       stage.classList.toggle('is-faded', expand >= 0.34);
     }
 
+    function releaseWhy() {
+      if (!thumbOn) return;
+      thumbOn = false;
+      why.classList.remove('is-thumb', 'is-shown');
+      why.style.transform = '';
+      why.style.clipPath = '';
+    }
+
+    // Scale/move the REAL #why between "miniature centered in the image slot" (e = 0)
+    // and "full section pinned at the viewport top" (e = 1). transform-origin is 0 0
+    // (CSS), so the top-left corner lands at (tx, layoutTop + ty) = (X, Y).
+    function placeWhy(at, e, index, end) {
+      if (at < 0 || at >= end) { releaseWhy(); return; }   // natural position takes over
+      if (!thumbOn) { thumbOn = true; why.classList.add('is-thumb'); }
+      why.classList.toggle('is-shown', index === last);
+
+      const layoutTop = main.getBoundingClientRect().top + why.offsetTop;  // untransformed top, viewport px
+      const s0 = Math.min(slot.width / stageW, slot.height / stageH);      // fit the whole section in the slot
+      const x0 = slot.left + (slot.width  - stageW * s0) / 2;
+      const y0 = slot.top  + (slot.height - stageH * s0) / 2;
+      const k = 1 - e;
+      const scale = s0 + (1 - s0) * e;
+      const tx = x0 * k;
+      const ty = y0 * k - layoutTop;
+      why.style.transform = 'translate(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px) scale(' + scale.toFixed(4) + ')';
+
+      // If the section is taller than the viewport, show only its first viewport-height
+      // so the miniature stays a clean rectangle; cleared on release.
+      const overflowPx = Math.max(0, why.offsetHeight - stageH);
+      why.style.clipPath = overflowPx > 0 ? 'inset(0 0 ' + overflowPx + 'px 0)' : '';
+    }
+
     function onScroll() {
       ticking = false;
-      if (!isPinned()) return;
+      if (!isPinned()) { releaseWhy(); return; }
       const t = timeline();
       const vh = window.innerHeight / 100;
       const at = -section.getBoundingClientRect().top / vh;   // vh scrolled into the section
       const listEnd = t.seg * last;                           // end of the service tabs
+      const end = listEnd + t.dwell + t.grow;                 // pin release = section fully landed
       let index, segP, e = 0;
       if (at < listEnd) {
         const pos = Math.max(0, at);
@@ -2466,6 +2512,7 @@
         e = smooth(clamp01((past - t.dwell) / t.grow));
       }
       render(index, segP, e);
+      placeWhy(at, e, index, end);
     }
 
     function requestTick() {
@@ -2486,32 +2533,31 @@
       });
     });
 
-    // ── SETTLE: never rest on the image ────────────────────────────────
-    // The "transition zone" runs from the moment the image starts growing until the
-    // Lumina Standard section is fully landed. If scrolling ends inside it, ease to
-    // the nearer resting state (direction-aware). Outside the zone nothing happens.
-    const SETTLE_ENABLED  = true;   // set false to disable the assist entirely
+    // ── SETTLE: never rest mid-growth ──────────────────────────────────
+    // Zone = from the moment the miniature starts growing until the section is fully
+    // landed. If scrolling ends inside it, ease to the nearer resting state.
+    const SETTLE_ENABLED  = true;   // false disables the assist entirely
     const SETTLE_DELAY    = 220;    // ms of stillness (after scrolling fully ends) before settling
-    const FORWARD_AT_DOWN = 0.2;    // scrolling down: past this fraction of the zone, finish forward
+    const FORWARD_AT_DOWN = 0.2;    // scrolling down: past this fraction, finish forward
     const FORWARD_AT_UP   = 0.8;    // scrolling up: only finish forward if barely left the landed section
     const HAS_SCROLLEND   = 'onscrollend' in window;
     let settleTimer = null;
     let lastY = window.scrollY;
-    let dir = 1;                    // last scroll direction: 1 = down, -1 = up
+    let dir = 1;
 
     function settle() {
       if (!SETTLE_ENABLED || !isPinned()) return;
       const t = timeline();
       const vh = window.innerHeight / 100;
       const sectionTop = window.scrollY + section.getBoundingClientRect().top;
-      const at = (window.scrollY - sectionTop) / vh;          // vh scrolled into the section
+      const at = (window.scrollY - sectionTop) / vh;
       const listEnd   = t.seg * last;
-      const growStart = listEnd + t.dwell;                    // image starts growing
-      const landing   = growStart + t.grow + t.rise;          // Standard section fully landed
-      if (at <= growStart + 1 || at >= landing - 1) return;   // outside the zone: rest freely
+      const growStart = listEnd + t.dwell;
+      const landing   = growStart + t.grow;
+      if (at <= growStart + 1 || at >= landing - 1) return;
       const frac = (at - growStart) / (landing - growStart);
       const forward = dir >= 0 ? frac >= FORWARD_AT_DOWN : frac >= FORWARD_AT_UP;
-      const target = forward ? landing : listEnd + t.dwell * 0.5;   // landed section, or "Discover More" hold
+      const target = forward ? landing : listEnd + t.dwell * 0.5;   // landed section, or the "Discover More" hold
       window.scrollTo({ top: sectionTop + target * vh, behavior: 'smooth' });
     }
 
@@ -2519,7 +2565,7 @@
       const y = window.scrollY;
       if (Math.abs(y - lastY) > 1) dir = y > lastY ? 1 : -1;
       lastY = y;
-      clearTimeout(settleTimer);                              // any scrolling cancels a pending settle
+      clearTimeout(settleTimer);
       if (!HAS_SCROLLEND) settleTimer = setTimeout(settle, SETTLE_DELAY + 80);
     }, { passive: true });
 
@@ -2531,9 +2577,11 @@
     }
 
     window.addEventListener('scroll', requestTick, { passive: true });
-    window.addEventListener('resize', () => { measure(); requestTick(); });
+    window.addEventListener('resize', () => { measure(); primeWhy(); requestTick(); });
     window.addEventListener('load', measure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measure(); requestTick(); });
     measure();
+    primeWhy();
     if (isPinned()) onScroll(); else render(0, 1, 0);
   })();
   </script>
