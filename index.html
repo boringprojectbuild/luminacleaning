@@ -1026,6 +1026,202 @@
       .why__slide { min-width: calc(100% - 0rem); }
     }
 
+    /* ── LUMINA STANDARD: pinned split-frame stage ── */
+    .why-stage { display: none; }   /* hidden everywhere except pinned mode */
+
+    @media (min-width: 1025px) and (prefers-reduced-motion: no-preference) {
+      @supports (overflow: clip) {
+        main {
+          --why-count: 4;    /* number of steps; must match the .why-step blocks */
+          --why-seg:   75;   /* scroll per step, in vh */
+          --why-par-title: 12;  /* title drift per step, in vh (fastest layer) */
+          --why-par-desc:  8;   /* description drift per step, in vh */
+          --why-par-photo: 5;   /* photo drift per step, in vh (slowest layer) */
+          --why-par-exit:  14;  /* extra photo lag behind the frame while it exits, in vh */
+        }
+
+        /* The section becomes a tall scroll track holding one sticky, full-viewport stage.
+           overflow: clip (NOT hidden) so the sticky stage still pins to the window.
+           Backdrop is sand and must stay OPAQUE: it covers the Services stage beneath. */
+        .why {
+          display: block;
+          height: calc((100 + var(--why-seg) * var(--why-count)) * 1vh);
+          min-height: 0;
+          padding: 0;
+          background: var(--sand);
+          border-radius: 0;
+          box-shadow: none;
+          overflow: clip;
+        }
+        .why__header,
+        .why__pillars,
+        .why__carousel-wrap { display: none; }
+
+        .why-stage {
+          display: block;
+          position: sticky;
+          top: 0;
+          height: 100vh;
+          padding: 3vh 2.5vw;
+          box-sizing: border-box;
+        }
+
+        .why-frame {
+          position: relative;
+          height: 100%;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          background: var(--dark);
+          border-radius: 24px;
+          overflow: clip;
+          box-shadow: 0 24px 60px rgba(28, 20, 16, 0.28);
+          isolation: isolate;
+        }
+
+        /* Left: inner text panel, inset so a gutter sits before the seam */
+        .why-frame__panel {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          margin: 3vh 2.5vw;
+          padding: clamp(1.5rem, 4vh, 3rem) clamp(1.75rem, 3vw, 3.5rem) clamp(5rem, 14vh, 9rem);
+          background: rgba(216, 199, 178, 0.06);
+          border-radius: 18px;
+        }
+        .why-frame__eyebrow {
+          margin: 0;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.72rem;
+          font-weight: 400;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: rgba(216, 199, 178, 0.6);
+        }
+        .why-frame__dots {
+          display: flex;
+          justify-content: center;
+          gap: clamp(1.25rem, 2.5vw, 2.5rem);
+          margin-top: clamp(1.5rem, 6vh, 4rem);
+        }
+        .why-frame__dot {
+          all: unset;
+          box-sizing: border-box;
+          cursor: pointer;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          border: 1px solid rgba(216, 199, 178, 0.7);
+          transition: background 0.3s ease;
+        }
+        .why-frame__dot.is-active { background: var(--sand); }
+        .why-frame__dot:focus-visible { outline: 2px solid var(--sand); outline-offset: 4px; }
+
+        .why-frame__copy { position: relative; flex: 1; }
+        .why-step {
+          --k: 0;                                        /* upcoming: starts low */
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+        }
+        .why-step.is-past { --k: 1; }                    /* passed: ends high */
+        .why-step.is-active {
+          --k: var(--why-sp, 0);                          /* live: follows scroll progress through its own segment */
+          opacity: 1;
+          visibility: visible;
+          transition: opacity 0.5s ease 0.15s, visibility 0s linear 0s;
+        }
+        .why-step__title {
+          margin: 0 0 clamp(1.25rem, 4vh, 2.5rem);
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(2.5rem, min(4.6vw, 7.5vh), 5rem);
+          font-weight: 400;
+          line-height: 1.05;
+          letter-spacing: 0.01em;
+          color: var(--sand);
+          transform: translate3d(0, calc((0.5 - var(--k)) * var(--why-par-title) * 1vh), 0);
+          will-change: transform;
+        }
+        .why-step__desc {
+          margin: 0;
+          max-width: 30ch;
+          font-family: 'Inter', sans-serif;
+          font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+          font-weight: 300;
+          line-height: 1.75;
+          color: rgba(240, 232, 220, 0.72);
+          transform: translate3d(0, calc((0.5 - var(--k)) * var(--why-par-desc) * 1vh), 0);
+          will-change: transform;
+        }
+
+        /* Right: photo flush to the frame's top/right/bottom edges; the frame's rounded
+           corners clip it. Cross-fade: incoming photo (z-index 2) fades in over the
+           outgoing one, which stays opaque until the fade completes. */
+        .why-frame__photos {
+          position: relative;
+          transform: translate3d(0, calc(var(--why-x, 0) * var(--why-par-exit) * 1vh), 0);
+          will-change: transform;
+        }
+        .why-photo {
+          --k: 0;
+          position: absolute;
+          top: calc((var(--why-par-photo) / 2 + var(--why-par-exit)) * -1vh);
+          left: 0;
+          width: 100%;
+          height: calc(100% + (var(--why-par-photo) + var(--why-par-exit)) * 1vh);
+          object-fit: cover;
+          object-position: center;
+          opacity: 0;
+          visibility: hidden;
+          z-index: 1;
+          transform: translate3d(0, calc((0.5 - var(--k)) * var(--why-par-photo) * 1vh), 0);
+          will-change: transform;
+          transition: opacity 0s linear 0.7s, visibility 0s linear 0.7s;
+        }
+        .why-photo.is-past { --k: 1; }
+        .why-photo.is-active {
+          --k: var(--why-sp, 0);
+          opacity: 1;
+          visibility: visible;
+          z-index: 2;
+          transition: opacity 0.7s ease, visibility 0s linear 0s;
+        }
+
+        /* Straddles the seam between the text panel and the photo (layered depth). */
+        .why-frame__cta {
+          position: absolute;
+          left: 50%;
+          bottom: 5vh;
+          transform: translateX(-50%);
+          z-index: 3;
+          padding: 1rem 2.5rem;
+          border-radius: 999px;
+          background: var(--sand);
+          color: var(--dark);
+          font-family: 'Inter', sans-serif;
+          font-size: 0.8rem;
+          font-weight: 500;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+          transition: opacity 0.25s ease;
+        }
+        .why-frame__cta:hover { opacity: 0.9; }
+        .why-frame__cta:focus-visible { outline: 2px solid var(--sand); outline-offset: 4px; }
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .why-step, .why-photo, .why-frame__dot { transition: none !important; }
+    }
+
 
     /* ════════════════════════════════════════════════════════
        6. ABOUT STRIP — Meet Aislinn
@@ -1997,6 +2193,45 @@
 
       </div>
 
+      <div class="why-stage">
+        <div class="why-frame">
+          <div class="why-frame__panel">
+            <p class="why-frame__eyebrow">The Lumina Standard</p>
+            <div class="why-frame__dots">
+              <button type="button" class="why-frame__dot is-active" aria-label="Step 1: Detail-Obsessed" aria-current="step"></button>
+              <button type="button" class="why-frame__dot" aria-label="Step 2: Built on Trust"></button>
+              <button type="button" class="why-frame__dot" aria-label="Step 3: Your Schedule"></button>
+              <button type="button" class="why-frame__dot" aria-label="Step 4: Rooted in San Antonio"></button>
+            </div>
+            <div class="why-frame__copy">
+              <div class="why-step is-active" data-index="0">
+                <h3 class="why-step__title">Detail-Obsessed</h3>
+                <p class="why-step__desc">Every corner. Every surface. We don't rush what matters.</p>
+              </div>
+              <div class="why-step" data-index="1">
+                <h3 class="why-step__title">Built on Trust</h3>
+                <p class="why-step__desc">8 years of experience, built one satisfied client at a time.</p>
+              </div>
+              <div class="why-step" data-index="2">
+                <h3 class="why-step__title">Your Schedule</h3>
+                <p class="why-step__desc">We work around your life — not the other way around.</p>
+              </div>
+              <div class="why-step" data-index="3">
+                <h3 class="why-step__title">Rooted in San Antonio</h3>
+                <p class="why-step__desc">Serving 78208 and the neighborhoods around it — homes, apartments and offices, with a reputation built one referral at a time.</p>
+              </div>
+            </div>
+          </div>
+          <div class="why-frame__photos">
+            <img class="why-photo is-active" data-index="0" src="Assets/images/Espejo-office.webp" alt="Office cleaning work by Lumina Cleaning Service San Antonio" loading="lazy" decoding="async">
+            <img class="why-photo" data-index="1" src="Assets/images/our-work-1.png" alt="Office cleaning work San Antonio — Lumina Cleaning Service" loading="lazy" decoding="async">
+            <img class="why-photo" data-index="2" src="Assets/images/our-work-2.jpg" alt="Professional cleaning results San Antonio — Lumina Cleaning Service" loading="lazy" decoding="async">
+            <img class="why-photo" data-index="3" src="Assets/images/our-work-3.jpg" alt="Lumina Cleaning Service work San Antonio TX" loading="lazy" decoding="async">
+          </div>
+          <a href="contact.html" class="why-frame__cta">Book a Cleaning →</a>
+        </div>
+      </div>
+
     </section>
 
 
@@ -2583,6 +2818,88 @@
     measure();
     primeWhy();
     if (isPinned()) onScroll(); else render(0, 1, 0);
+  })();
+  </script>
+
+  <script>
+  (function () {
+    const why = document.getElementById('why');
+    const stage = why && why.querySelector('.why-stage');
+    if (!stage) return;
+
+    const dots   = Array.from(stage.querySelectorAll('.why-frame__dot'));
+    const steps  = Array.from(stage.querySelectorAll('.why-step'));
+    const photos = Array.from(stage.querySelectorAll('.why-photo'));
+    let active = -1;
+    let lastSp = -1, lastX = -1;
+    let ticking = false;
+
+    const isPinned = () => getComputedStyle(stage).position === 'sticky';
+    const clamp01 = (x) => Math.min(1, Math.max(0, x));
+    const stepCount = () => {
+      const v = parseInt(getComputedStyle(why).getPropertyValue('--why-count'), 10);
+      return Number.isNaN(v) ? steps.length : v;   // CSS is the single source of truth
+    };
+
+    function setStep(i) {
+      if (i === active) return;
+      active = i;
+      dots.forEach((d, k) => {
+        d.classList.toggle('is-active', k === i);
+        if (k === i) d.setAttribute('aria-current', 'step');
+        else d.removeAttribute('aria-current');
+      });
+      [steps, photos].forEach((list) => list.forEach((el, k) => {
+        el.classList.toggle('is-active', k === i);
+        el.classList.toggle('is-past', k < i);
+      }));
+    }
+
+    // Parallax inputs, consumed by CSS: --why-sp = progress through the active step (0..1),
+    // --why-x = progress through the exit (0..1). Written only when they change.
+    function setParallax(sp, x) {
+      if (Math.abs(sp - lastSp) > 0.0005) { stage.style.setProperty('--why-sp', sp.toFixed(4)); lastSp = sp; }
+      if (Math.abs(x - lastX) > 0.0005)   { stage.style.setProperty('--why-x',  x.toFixed(4));  lastX = x; }
+    }
+
+    function onScroll() {
+      ticking = false;
+      if (!isPinned()) return;
+      // While the Services script shows #why as a scaled miniature its rect is
+      // transformed: hold the neutral state (identical to the landed state, so no jump).
+      if (why.classList.contains('is-thumb')) { setStep(0); setParallax(0, 0); return; }
+      const rect = why.getBoundingClientRect();
+      const scrollable = why.offsetHeight - stage.offsetHeight;
+      if (scrollable <= 0) return;
+      const n = stepCount();
+      const progress = clamp01(-rect.top / scrollable);
+      const raw = progress * n;
+      const index = Math.min(n - 1, Math.floor(raw));
+      setStep(index);
+      const sp = clamp01(raw - index);
+      // Exit: 0 while pinned; rises 0 to 1 as the released frame scrolls away
+      // (the section's bottom travels from the viewport bottom to the viewport top).
+      const x = clamp01((window.innerHeight - rect.bottom) / window.innerHeight);
+      setParallax(sp, x);
+    }
+
+    function requestTick() {
+      if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+    }
+
+    dots.forEach((d, k) => {
+      d.addEventListener('click', () => {
+        if (!isPinned()) return;
+        const scrollable = why.offsetHeight - stage.offsetHeight;
+        const whyTop = window.scrollY + why.getBoundingClientRect().top;
+        const n = stepCount();
+        window.scrollTo({ top: whyTop + scrollable * ((k + 0.05) / n), behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('scroll', requestTick, { passive: true });
+    window.addEventListener('resize', requestTick);
+    if (isPinned()) onScroll(); else setStep(0);
   })();
   </script>
 
