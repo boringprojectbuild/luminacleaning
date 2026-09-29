@@ -725,7 +725,61 @@
         border-radius: calc(20px * (1 - var(--expand, 0)));
         background: var(--dark);
       }
+      .services-story__panel--expand::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--dark);
+        opacity: calc(var(--expand, 0) * 0.5);
+        pointer-events: none;
+      }
       .services-story__panel--expand .services-story__card { z-index: 2; }
+
+      .services-story__reveal {
+        position: absolute;
+        left: 50%;
+        bottom: 12vh;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.75rem;
+        text-align: center;
+        width: min(90%, 760px);
+        opacity: var(--quote-fade, 0);
+        transform: translate(-50%, calc((1 - var(--quote-fade, 0)) * 16px));
+        pointer-events: none;
+      }
+      .services-story.is-revealed .services-story__reveal {
+        pointer-events: auto;
+      }
+      .services-story__quote {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+        line-height: 1.4;
+        color: var(--sand);
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+      }
+      .services-story__cta {
+        display: inline-block;
+        padding: 1rem 2.75rem;
+        border-radius: 999px;
+        background: var(--sand);
+        color: var(--dark);
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: opacity 0.25s ease;
+      }
+      .services-story__cta:hover { opacity: 0.9; }
+      .services-story__cta:focus-visible { outline: 2px solid var(--sand); outline-offset: 4px; }
 
       /* Everything else fades out over the first third of the expansion. */
       .services-story__eyebrow,
@@ -760,31 +814,18 @@
           --svc-seg:   75;   /* scroll per service tab */
           --svc-dwell: 25;   /* miniature sits in the image box before it starts growing */
           --svc-grow:  90;   /* miniature grows into the full section */
+          --svc-exit:  100;  /* extra vh the pin holds the fully-expanded photo before releasing to Why */
         }
         .services {
-          height: calc((100 + var(--svc-seg) * var(--svc-count) + var(--svc-dwell) + var(--svc-grow)) * 1vh);
+          height: calc((100 + var(--svc-seg) * var(--svc-count) + var(--svc-dwell) + var(--svc-grow) + var(--svc-exit)) * 1vh);
         }
         .services-story { position: sticky; top: 0; }
 
-        /* #why's natural (untransformed) position: its top edge reaches the viewport
-           top exactly when the pin releases. During the pin the JS scales and moves it
-           with a transform. NEVER add transition: transform or will-change here. */
         .why {
           position: relative;
           z-index: 3;
           margin-top: -100vh;
-          transform-origin: 0 0;
         }
-        .why.is-thumb {
-          opacity: 0;
-          pointer-events: none;
-          box-shadow: none;
-          transition: opacity 0.7s ease;
-        }
-        .why.is-thumb.is-shown { opacity: 1; }
-
-        /* The miniature IS the content in pinned mode, so the fallback card is hidden. */
-        .services-story__panel--expand .services-story__card { display: none; }
       }
     }
 
@@ -792,6 +833,7 @@
       .services-story__panel,
       .services-story__item,
       .services-story__item::after { transition: none !important; }
+      .services-story__reveal { transition: none !important; }
     }
 
     .service-card {
@@ -2064,9 +2106,14 @@
               </div>
             </article>
             <article class="services-story__panel services-story__panel--expand" data-index="4">
+              <img src="Assets/images/Espejo-office.webp" alt="Bright open studio space with a perforated feature wall and loft stairs, San Antonio — Lumina Cleaning Service" loading="lazy" decoding="async">
               <div class="services-story__card">
-                <p class="services-story__desc">See what sets every Lumina clean apart.</p>
+                <p class="services-story__desc">See the standard behind every Lumina clean.</p>
                 <a href="#why" class="services-story__link">Explore the Standard →</a>
+              </div>
+              <div class="services-story__reveal">
+                <p class="services-story__quote">This is what the Lumina Standard looks like.</p>
+                <a href="contact.html" class="services-story__cta">Book a Cleaning →</a>
               </div>
             </article>
           </div>
@@ -2223,7 +2270,7 @@
             </div>
           </div>
           <div class="why-frame__photos">
-            <img class="why-photo is-active" data-index="0" src="Assets/images/Espejo-office.webp" alt="Office cleaning work by Lumina Cleaning Service San Antonio" loading="lazy" decoding="async">
+            <img class="why-photo is-active" data-index="0" src="Assets/images/our-work-4.jpg" alt="Barber-style chair and vanity setup, professionally cleaned, San Antonio — Lumina Cleaning Service" loading="lazy" decoding="async">
             <img class="why-photo" data-index="1" src="Assets/images/our-work-1.png" alt="Office cleaning work San Antonio — Lumina Cleaning Service" loading="lazy" decoding="async">
             <img class="why-photo" data-index="2" src="Assets/images/our-work-2.jpg" alt="Professional cleaning results San Antonio — Lumina Cleaning Service" loading="lazy" decoding="async">
             <img class="why-photo" data-index="3" src="Assets/images/our-work-3.jpg" alt="Lumina Cleaning Service work San Antonio TX" loading="lazy" decoding="async">
@@ -2627,9 +2674,7 @@
   (function () {
     const section = document.getElementById('services');
     const stage = section && section.querySelector('.services-story');
-    const why = document.getElementById('why');
-    const main = document.querySelector('main');
-    if (!stage || !why || !main) return;
+    if (!stage) return;
 
     const items  = Array.from(stage.querySelectorAll('.services-story__item'));
     const panels = Array.from(stage.querySelectorAll('.services-story__panel'));
@@ -2637,15 +2682,11 @@
     const last = items.length - 1;   // final item ("Discover More")
     let active = -1;
     let ticking = false;
-    let thumbOn = false;             // true while #why is displayed as the miniature
-    let slot = { left: 0, top: 0, width: 1, height: 1 };  // image slot, stage-relative px
-    let stageW = 1, stageH = 1;
 
     const isPinned = () => getComputedStyle(stage).position === 'sticky';
     const clamp01 = (x) => Math.min(1, Math.max(0, x));
     const smooth = (t) => t * t * (3 - 2 * t);
 
-    // Timeline lengths (vh) live in CSS on <main>; single source of truth.
     function timeline() {
       const cs = getComputedStyle(section);
       const num = (name, fallback) => {
@@ -2655,26 +2696,15 @@
       return { seg: num('--svc-seg', 75), dwell: num('--svc-dwell', 25), grow: num('--svc-grow', 90) };
     }
 
-    // Slot geometry (stage-relative). Also feeds the dark card's growth variables.
+    // Slot geometry, stage-relative: how far the fifth panel must grow to reach
+    // each stage edge (consumed by the CSS var(--ci-*) calc rules).
     function measure() {
       const s = stage.getBoundingClientRect();
       const v = visual.getBoundingClientRect();
-      slot = { left: v.left - s.left, top: v.top - s.top, width: v.width, height: v.height };
-      stageW = s.width;
-      stageH = s.height;
       stage.style.setProperty('--ci-top',    (v.top - s.top) + 'px');
       stage.style.setProperty('--ci-right',  (s.right - v.right) + 'px');
       stage.style.setProperty('--ci-bottom', (s.bottom - v.bottom) + 'px');
       stage.style.setProperty('--ci-left',   (v.left - s.left) + 'px');
-    }
-
-    // The miniature must be fully visible from the first frame: pre-reveal every
-    // animated element inside #why and load its images eagerly. Pinned mode only.
-    function primeWhy() {
-      if (!isPinned()) return;
-      why.querySelectorAll('.anim-fade-up, .anim-fade-in, .anim-scale-up, .anim-slide-left, .anim-slide-right')
-        .forEach((el) => el.classList.add('anim-visible'));
-      why.querySelectorAll('img[loading="lazy"]').forEach((img) => { img.loading = 'eager'; });
     }
 
     function render(index, segProgress, expand) {
@@ -2691,50 +2721,20 @@
         el.style.setProperty('--fill', k < index ? 1 : (k === index ? segProgress : 0));
       });
       stage.style.setProperty('--expand', expand.toFixed(4));
+      const quoteFade = Math.min(1, Math.max(0, (expand - 0.6) / 0.4));
+      stage.style.setProperty('--quote-fade', quoteFade.toFixed(4));
+      stage.classList.toggle('is-revealed', quoteFade > 0.5);
       stage.classList.toggle('is-expanding', expand > 0.02);
       stage.classList.toggle('is-faded', expand >= 0.34);
     }
 
-    function releaseWhy() {
-      if (!thumbOn) return;
-      thumbOn = false;
-      why.classList.remove('is-thumb', 'is-shown');
-      why.style.transform = '';
-      why.style.clipPath = '';
-    }
-
-    // Scale/move the REAL #why between "miniature centered in the image slot" (e = 0)
-    // and "full section pinned at the viewport top" (e = 1). transform-origin is 0 0
-    // (CSS), so the top-left corner lands at (tx, layoutTop + ty) = (X, Y).
-    function placeWhy(at, e, index, end) {
-      if (at < 0 || at >= end) { releaseWhy(); return; }   // natural position takes over
-      if (!thumbOn) { thumbOn = true; why.classList.add('is-thumb'); }
-      why.classList.toggle('is-shown', index === last);
-
-      const layoutTop = main.getBoundingClientRect().top + why.offsetTop;  // untransformed top, viewport px
-      const s0 = Math.min(slot.width / stageW, slot.height / stageH);      // fit the whole section in the slot
-      const x0 = slot.left + (slot.width  - stageW * s0) / 2;
-      const y0 = slot.top  + (slot.height - stageH * s0) / 2;
-      const k = 1 - e;
-      const scale = s0 + (1 - s0) * e;
-      const tx = x0 * k;
-      const ty = y0 * k - layoutTop;
-      why.style.transform = 'translate(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px) scale(' + scale.toFixed(4) + ')';
-
-      // If the section is taller than the viewport, show only its first viewport-height
-      // so the miniature stays a clean rectangle; cleared on release.
-      const overflowPx = Math.max(0, why.offsetHeight - stageH);
-      why.style.clipPath = overflowPx > 0 ? 'inset(0 0 ' + overflowPx + 'px 0)' : '';
-    }
-
     function onScroll() {
       ticking = false;
-      if (!isPinned()) { releaseWhy(); return; }
+      if (!isPinned()) return;
       const t = timeline();
       const vh = window.innerHeight / 100;
-      const at = -section.getBoundingClientRect().top / vh;   // vh scrolled into the section
-      const listEnd = t.seg * last;                           // end of the service tabs
-      const end = listEnd + t.dwell + t.grow;                 // pin release = section fully landed
+      const at = -section.getBoundingClientRect().top / vh;
+      const listEnd = t.seg * last;
       let index, segP, e = 0;
       if (at < listEnd) {
         const pos = Math.max(0, at);
@@ -2747,7 +2747,6 @@
         e = smooth(clamp01((past - t.dwell) / t.grow));
       }
       render(index, segP, e);
-      placeWhy(at, e, index, end);
     }
 
     function requestTick() {
@@ -2769,12 +2768,10 @@
     });
 
     // ── SETTLE: never rest mid-growth ──────────────────────────────────
-    // Zone = from the moment the miniature starts growing until the section is fully
-    // landed. If scrolling ends inside it, ease to the nearer resting state.
-    const SETTLE_ENABLED  = true;   // false disables the assist entirely
-    const SETTLE_DELAY    = 220;    // ms of stillness (after scrolling fully ends) before settling
-    const FORWARD_AT_DOWN = 0.2;    // scrolling down: past this fraction, finish forward
-    const FORWARD_AT_UP   = 0.8;    // scrolling up: only finish forward if barely left the landed section
+    const SETTLE_ENABLED  = true;
+    const SETTLE_DELAY    = 220;
+    const FORWARD_AT_DOWN = 0.2;
+    const FORWARD_AT_UP   = 0.8;
     const HAS_SCROLLEND   = 'onscrollend' in window;
     let settleTimer = null;
     let lastY = window.scrollY;
@@ -2792,7 +2789,7 @@
       if (at <= growStart + 1 || at >= landing - 1) return;
       const frac = (at - growStart) / (landing - growStart);
       const forward = dir >= 0 ? frac >= FORWARD_AT_DOWN : frac >= FORWARD_AT_UP;
-      const target = forward ? landing : listEnd + t.dwell * 0.5;   // landed section, or the "Discover More" hold
+      const target = forward ? landing : listEnd + t.dwell * 0.5;
       window.scrollTo({ top: sectionTop + target * vh, behavior: 'smooth' });
     }
 
@@ -2812,11 +2809,9 @@
     }
 
     window.addEventListener('scroll', requestTick, { passive: true });
-    window.addEventListener('resize', () => { measure(); primeWhy(); requestTick(); });
+    window.addEventListener('resize', () => { measure(); requestTick(); });
     window.addEventListener('load', measure);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measure(); requestTick(); });
     measure();
-    primeWhy();
     if (isPinned()) onScroll(); else render(0, 1, 0);
   })();
   </script>
