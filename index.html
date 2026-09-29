@@ -633,7 +633,7 @@
         cursor: pointer;
         padding: 1.5rem 0;
         font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(2rem, min(3.6vw, 6.2vh), 3.75rem);
+        font-size: clamp(1.5rem, min(2.6vw, 4.6vh), 2.75rem);
         font-weight: 400;
         line-height: 1.05;
         color: rgba(28, 20, 16, 0.3);
@@ -1396,6 +1396,27 @@
       .about__photo { min-height: 50vh; }
       .about__content { padding: 3rem 2rem; }
       .about__heading { font-size: 3.5rem; }
+    }
+
+    @media (min-width: 769px) {
+      /* 200vh wrapper gives About 100vh of scroll distance to stay pinned before it
+         releases — identical mechanism to .hero-stack. */
+      .about-stack { height: 200vh; }
+
+      .about {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+
+      /* Pulled up by the same 100vh the wrapper provides, so CTA (and, by normal
+         document flow, the footer right after it) rises to overlap About's pinned
+         zone. CTA's own border-radius and box-shadow are already declared
+         unconditionally in the base .cta rule — nothing to add here. */
+      .cta {
+        margin-top: -100vh;
+        z-index: 2;
+      }
     }
 
 
@@ -2288,36 +2309,38 @@
     <div class="about-mobile-title">
       The Woman Behind the Standard
     </div>
-    <section class="about" id="about" aria-labelledby="about-heading">
+    <div class="about-stack">
+      <section class="about" id="about" aria-labelledby="about-heading">
 
-      <!-- Left — Photo -->
-      <div class="about__photo anim-slide-left">
-        <img
-          src="Assets/images/Lumina-Cleaning-headshot2.png"
-          alt="Aislinn Venegas founder of Lumina Cleaning Service San Antonio"
-          class="about__headshot">
-      </div>
+        <!-- Left — Photo -->
+        <div class="about__photo anim-slide-left">
+          <img
+            src="Assets/images/Lumina-Cleaning-headshot2.png"
+            alt="Aislinn Venegas founder of Lumina Cleaning Service San Antonio"
+            class="about__headshot">
+        </div>
 
-      <!-- Right — Text -->
-      <div class="about__content">
+        <!-- Right — Text -->
+        <div class="about__content">
 
-        <span class="about__label anim-fade-up">The Woman Behind the Standard</span>
+          <span class="about__label anim-fade-up">The Woman Behind the Standard</span>
 
-        <h2 class="about__heading anim-fade-up anim-delay-1" id="about-heading">Aislinn.</h2>
+          <h2 class="about__heading anim-fade-up anim-delay-1" id="about-heading">Aislinn.</h2>
 
-        <blockquote class="about__quote anim-fade-up anim-delay-2">
-          "You can tell the difference between a space that was cleaned and one that was cared for. That's the standard I bring to every home."
-        </blockquote>
+          <blockquote class="about__quote anim-fade-up anim-delay-2">
+            "You can tell the difference between a space that was cleaned and one that was cared for. That's the standard I bring to every home."
+          </blockquote>
 
-        <p class="about__text anim-fade-up anim-delay-3">
-          Aislinn Venegas founded Lumina Cleaning Service after 8 years of hands-on experience. Originally from Chihuahua, Mexico, she built her reputation in San Antonio one home at a time — through referrals, trust, and work that speaks for itself.
-        </p>
+          <p class="about__text anim-fade-up anim-delay-3">
+            Aislinn Venegas founded Lumina Cleaning Service after 8 years of hands-on experience. Originally from Chihuahua, Mexico, she built her reputation in San Antonio one home at a time — through referrals, trust, and work that speaks for itself.
+          </p>
 
-        <a href="about.html" class="about__btn anim-fade-up anim-delay-4">Our Story</a>
+          <a href="about.html" class="about__btn anim-fade-up anim-delay-4">Our Story</a>
 
-      </div>
+        </div>
 
-    </section>
+      </section>
+    </div>
 
     <!-- ══════════════════════════════════════════════════════
          CONTACT CTA
